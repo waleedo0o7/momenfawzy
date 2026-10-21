@@ -1,0 +1,209 @@
+---
+import { Image } from 'astro:assets';
+
+import type { ProjectEntry } from '../../lib/content';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+import ProjectCardMeta from './ProjectCardMeta.astro';
+
+interface Props {
+  projects: ProjectEntry[];
+}
+
+const { projects } = Astro.props;
+const categories = [...new Set(projects.map((project) => project.data.category))].sort((a, b) =>
+  a.localeCompare(b),
+);
+---
+
+<Section tone="surface" labelledby="projects-gallery-title" class="border-b border-border">
+  <Container width="wide">
+    <div class="flex flex-col gap-10 border-b border-border pb-10 lg:flex-row lg:items-end lg:justify-between lg:gap-16 lg:pb-14">
+      <div>
+        <p class="eyebrow">Portfolio</p>
+        <h2
+          id="projects-gallery-title"
+          class="mt-6 font-display text-[clamp(3.5rem,6vw,7rem)] leading-[0.86] tracking-[-0.045em]"
+        >
+          Selected <span class="text-accent italic">Projects.</span>
+        </h2>
+      </div>
+
+      {projects.length > 0 && (
+        <div class="max-w-[48rem]">
+          <div
+            class="flex flex-wrap gap-x-7 gap-y-4"
+            role="group"
+            aria-label="Filter projects by category"
+            data-project-filters
+          >
+            <button
+              type="button"
+              class="project-filter"
+              data-category-filter="all"
+              aria-pressed="true"
+              aria-controls="projects-grid"
+            >
+              All Projects
+            </button>
+            {categories.map((category) => (
+              <button
+                type="button"
+                class="project-filter"
+                data-category-filter={category}
+                aria-pressed="false"
+                aria-controls="projects-grid"
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+
+    {projects.length > 0 ? (
+      <div
+        id="projects-grid"
+        class="mt-14 grid grid-cols-2 gap-x-4 gap-y-10 md:gap-x-6 md:gap-y-14 lg:mt-20 lg:grid-cols-4"
+      >
+        {projects.map((project) => (
+          <article
+            class="project-entry group min-w-0"
+            data-project-entry
+            data-project-category={project.data.category}
+          >
+            <a
+              href={`/projects/${project.data.slug}/`}
+              class="block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+            >
+              <div class="aspect-square overflow-hidden bg-canvas">
+                <Image
+                  src={project.data.coverImage}
+                  alt={project.data.imageAlt}
+                  widths={[640, 960, 1280, 1600]}
+                  sizes="(max-width: 1023px) 50vw, 25vw"
+                  format="webp"
+                  quality={87}
+                  loading="lazy"
+                  class="h-full w-full object-cover transition-transform duration-700 ease-[var(--brand-ease-emphasized)] group-hover:scale-[1.025]"
+                />
+              </div>
+              <ProjectCardMeta project={project} />
+            </a>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="py-[clamp(5rem,10vw,9rem)] text-center">
+        <p class="eyebrow">Portfolio in Preparation</p>
+        <p class="mx-auto mt-7 max-w-[40rem] font-display text-[clamp(2.5rem,5vw,5rem)] leading-[0.95]">
+          Verified project stories and approved photography will appear here.
+        </p>
+      </div>
+    )}
+
+    <p
+      class="mt-16 hidden border border-border px-6 py-8 text-center text-sm text-muted"
+      role="status"
+      aria-live="polite"
+      data-project-empty
+    >
+      No projects are available in this category.
+    </p>
+    <p class="sr-only" aria-live="polite" data-project-count></p>
+  </Container>
+</Section>
+
+<script>
+  const filterRoot = document.querySelector<HTMLElement>('[data-project-filters]');
+  const projectEntries = [...document.querySelectorAll<HTMLElement>('[data-project-entry]')];
+  const emptyState = document.querySelector<HTMLElement>('[data-project-empty]');
+  const countStatus = document.querySelector<HTMLElement>('[data-project-count]');
+
+  function applyProjectFilter(category: string) {
+    let visibleCount = 0;
+
+    for (const entry of projectEntries) {
+      const isVisible = category === 'all' || entry.dataset.projectCategory === category;
+      entry.hidden = !isVisible;
+      if (isVisible) visibleCount += 1;
+    }
+
+    filterRoot?.querySelectorAll<HTMLButtonElement>('[data-category-filter]').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.categoryFilter === category));
+    });
+
+    emptyState?.classList.toggle('hidden', visibleCount !== 0);
+    if (countStatus) {
+      countStatus.textContent = `${visibleCount} ${visibleCount === 1 ? 'project' : 'projects'} shown.`;
+    }
+  }
+
+  filterRoot?.addEventListener('click', (event) => {
+    const target = (event.target as HTMLElement).closest<HTMLButtonElement>(
+      '[data-category-filter]',
+    );
+    if (!target) return;
+    applyProjectFilter(target.dataset.categoryFilter ?? 'all');
+  });
+
+  document.addEventListener('projects:filter', (event) => {
+    if (event instanceof CustomEvent && typeof event.detail === 'string') {
+      applyProjectFilter(event.detail);
+    }
+  });
+</script>
+
+<style>
+  .project-filter {
+    position: relative;
+    padding-block: 0.4rem;
+    color: color-mix(in srgb, var(--brand-color-text) 58%, transparent);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color var(--brand-duration-base) var(--brand-ease-standard);
+  }
+
+  .project-filter::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: right;
+    background: var(--brand-color-accent);
+    content: '';
+    transition: transform var(--brand-duration-base) var(--brand-ease-emphasized);
+  }
+
+  .project-filter:hover,
+  .project-filter[aria-pressed='true'] {
+    color: var(--brand-color-accent);
+  }
+
+  .project-filter[aria-pressed='true']::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .project-entry {
+    animation: project-entry-in 420ms var(--brand-ease-emphasized) both;
+  }
+
+  @keyframes project-entry-in {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-entry {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,64 @@
+---
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+
+const qualifications = [
+  {
+    title: 'Faculty of Fine Arts, Alexandria University',
+    detail: 'Studies in Graphics, Interior Design, and Fine Arts.',
+  },
+  {
+    title: 'Postgraduate Diploma in Interior Design & Interior Architecture',
+    detail: 'Specialized professional studies in Egypt and the UAE.',
+  },
+  {
+    title: 'Advanced Interior Design Studies',
+    detail: 'Dubai.',
+  },
+  {
+    title: 'MBA — Arab Academy for Science, Technology & Maritime Transport',
+    detail: 'Focused on business administration, management, and entrepreneurship.',
+  },
+] as const;
+---
+
+<Section labelledby="education-title" class="border-b border-border">
+  <Container width="wide">
+    <div class="grid gap-14 lg:grid-cols-12 lg:gap-x-12 xl:gap-x-16">
+      <div class="about-reveal lg:col-span-5 lg:sticky lg:top-32 lg:self-start">
+        <p class="eyebrow">Education & Qualifications</p>
+        <h2
+          id="education-title"
+          class="mt-6 max-w-[11ch] font-display text-[clamp(3.5rem,6vw,7rem)] leading-[0.88] tracking-[-0.045em]"
+        >
+          Where Creativity Meets <span class="text-accent italic">Business Thinking.</span>
+        </h2>
+      </div>
+
+      <div class="about-reveal relative lg:col-span-6 lg:col-start-7 lg:pt-4">
+        <div
+          class="absolute top-6 bottom-10 left-[0.31rem] w-px bg-gradient-to-b from-accent/70 via-border to-border/20"
+          aria-hidden="true"
+        ></div>
+        <ol>
+          {qualifications.map((item, index) => (
+            <li class="group relative grid grid-cols-[0.7rem_1fr] gap-6 pb-12 last:pb-0 sm:gap-8 sm:pb-14">
+              <span class="relative z-10 mt-2 h-2.5 w-2.5 rounded-full border border-accent bg-canvas transition-all duration-300 group-hover:bg-accent group-hover:shadow-[0_0_0_5px_rgba(201,159,112,0.1)]"></span>
+              <div class="border-b border-border/90 pb-10 transition-colors duration-300 group-hover:border-accent/50 sm:pb-12">
+                <p class="text-[0.62rem] font-bold tracking-[0.2em] text-accent uppercase">
+                  Qualification {String(index + 1).padStart(2, '0')}
+                </p>
+                <h3 class="mt-4 max-w-[24ch] font-display text-[clamp(2rem,3vw,3.1rem)] leading-[1.02] transition-colors duration-300 group-hover:text-white">
+                  {item.title}
+                </h3>
+                <p class="mt-4 max-w-[36rem] text-base leading-[1.75] text-muted sm:text-[1.0625rem]">
+                  {item.detail}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </Container>
+</Section>

@@ -1,0 +1,28 @@
+---
+import FeaturedProjects from '../components/home/FeaturedProjects.astro';
+import FinalCta from '../components/home/FinalCta.astro';
+import FounderIntro from '../components/home/FounderIntro.astro';
+import Hero from '../components/home/Hero.astro';
+import MediaInsights from '../components/home/MediaInsights.astro';
+import ScrollMarquee from '../components/home/ScrollMarquee.astro';
+import ServicesOverview from '../components/home/ServicesOverview.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getFeaturedProjects, getLatestMediaItems } from '../lib/content';
+import { SITE_NAME } from '../utils/site';
+
+const description =
+  'Founder-led interior design, turnkey fit-out, and site supervision by Momen Fawzy, serving clients across Egypt and the GCC.';
+const [projects, mediaItems] = await Promise.all([getFeaturedProjects(3), getLatestMediaItems(3)]);
+---
+
+<BaseLayout title={SITE_NAME} {description}>
+  <main id="main-content">
+    <Hero />
+    <FounderIntro />
+    <FeaturedProjects {projects} />
+    <ServicesOverview />
+    <MediaInsights items={mediaItems} />
+    <ScrollMarquee />
+    <FinalCta />
+  </main>
+</BaseLayout>

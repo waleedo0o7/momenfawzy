@@ -1,0 +1,23 @@
+---
+interface Props {
+  id?: string;
+  labelledby?: string;
+  tone?: 'canvas' | 'surface' | 'light';
+  class?: string;
+}
+
+const { id, labelledby, tone = 'canvas', class: className } = Astro.props;
+const tones = {
+  canvas: 'bg-canvas text-foreground',
+  surface: 'bg-surface text-foreground',
+  light: 'bg-light text-ink',
+};
+---
+
+<section
+  {id}
+  aria-labelledby={labelledby}
+  class:list={['py-[var(--brand-space-section)]', tones[tone], className]}
+>
+  <slot />
+</section>

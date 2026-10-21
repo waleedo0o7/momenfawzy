@@ -1,0 +1,38 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+import ProjectCta from '../../components/projects/ProjectCta.astro';
+import ProjectDetailHero from '../../components/projects/ProjectDetailHero.astro';
+import ProjectGallery from '../../components/projects/ProjectGallery.astro';
+import ProjectNavigation from '../../components/projects/ProjectNavigation.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPublishedProjects } from '../../lib/content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  nextProject?: CollectionEntry<'projects'>;
+}
+
+export async function getStaticPaths() {
+  const projects = await getPublishedProjects();
+
+  return projects.map((project, index) => ({
+    params: { slug: project.data.slug },
+    props: {
+      project,
+      nextProject: projects.length > 1 ? projects[(index + 1) % projects.length] : undefined,
+    },
+  }));
+}
+
+const { project, nextProject } = Astro.props;
+---
+
+<BaseLayout title={project.data.title} description={project.data.shortDescription}>
+  <main id="main-content">
+    <ProjectDetailHero {project} />
+    <ProjectGallery {project} />
+    <ProjectNavigation {nextProject} />
+    <ProjectCta />
+  </main>
+</BaseLayout>

@@ -1,0 +1,75 @@
+---
+import { Image } from 'astro:assets';
+
+import heroPortrait from '../../assets/images/about/momen-about-hero.png';
+import Container from '../ui/Container.astro';
+---
+
+<section
+  aria-labelledby="about-hero-title"
+  class="relative isolate min-h-[48rem] overflow-hidden border-b border-border sm:min-h-[56rem] lg:h-[calc(100svh-5.25rem)] lg:min-h-[52rem] lg:max-h-[64rem]"
+>
+  <Image
+    src={heroPortrait}
+    alt="Momen Fawzy seated and looking beyond the frame"
+    widths={[640, 960, 1280, 1600]}
+    sizes="(max-width: 1023px) 100vw, 68vw"
+    format="webp"
+    quality={88}
+    priority
+    class="absolute inset-0 -z-30 h-full w-full object-cover object-[58%_center] lg:left-auto lg:w-[72%] lg:object-[center_22%] xl:w-[70%]"
+  />
+  <div
+    class="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(12,13,11,0.99)_0%,rgba(12,13,11,0.96)_27%,rgba(12,13,11,0.76)_43%,rgba(12,13,11,0.34)_68%,rgba(12,13,11,0.08)_100%)]"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="absolute inset-y-0 left-[28%] -z-10 hidden w-[24%] bg-gradient-to-r from-canvas/65 to-transparent lg:block"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="absolute inset-x-0 bottom-0 -z-10 h-2/5 bg-gradient-to-t from-canvas via-canvas/55 to-transparent"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="absolute inset-y-0 left-[38%] -z-10 hidden w-px bg-white/10 lg:block"
+    aria-hidden="true"
+  ></div>
+
+  <Container
+    width="wide"
+    class="flex min-h-[48rem] items-end sm:min-h-[56rem] lg:h-full lg:min-h-0"
+  >
+    <div class="about-hero-copy max-w-[52rem] pb-[clamp(5rem,8vw,8rem)] pt-40">
+      <p class="eyebrow">The Person Behind the Spaces</p>
+      <h1
+        id="about-hero-title"
+        class="mt-7 max-w-[9ch] font-display text-[clamp(4.4rem,9vw,10rem)] leading-[0.78] tracking-[-0.055em]"
+      >
+        Meet <span class="text-accent italic">Momen Fawzy.</span>
+      </h1>
+      <p class="mt-8 max-w-[38rem] text-[clamp(1.0625rem,1.2vw,1.25rem)] leading-[1.8] text-white/76">
+        Interior Designer, Fit-Out Professional, and Entrepreneur with over 15 years of experience
+        shaping distinctive spaces across Egypt and the GCC.
+      </p>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .about-hero-copy {
+    animation: about-hero-copy-in 750ms var(--brand-ease-emphasized) both;
+  }
+
+  @keyframes about-hero-copy-in {
+    from {
+      transform: translateY(1.25rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .about-hero-copy {
+      animation: none;
+    }
+  }
+</style>

@@ -1,0 +1,69 @@
+---
+import type { ContactConfig } from '../../data/contact';
+import ContactIcon from './ContactIcon.astro';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+
+interface Props {
+  contact: ContactConfig;
+}
+
+const { contact } = Astro.props;
+const displayedSocials = contact.socials.filter((social) => social.id !== 'website');
+---
+
+<Section labelledby="contact-socials-title" tone="surface" class="border-b border-border">
+  <Container width="wide">
+    <div class="flex flex-col gap-8 border-b border-border pb-10 md:flex-row md:items-end md:justify-between">
+      <div>
+        <p class="eyebrow">Follow the Studio</p>
+        <h2
+          id="contact-socials-title"
+          class="mt-6 font-display text-[clamp(3.3rem,5.5vw,6.4rem)] leading-[0.87] tracking-[-0.047em]"
+        >
+          Stay <span class="text-accent italic">Connected.</span>
+        </h2>
+      </div>
+      <p class="max-w-[30rem] text-base leading-8 text-muted">
+        Follow current studio work, design stories, and behind-the-scenes perspectives.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3">
+      {displayedSocials.map((social) => (
+        <a
+          href={social.url}
+          target="_blank"
+          rel="noreferrer"
+          class="group flex min-h-56 flex-col justify-between border-b border-border py-8 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:border-r md:px-8 md:last:border-r-0"
+          aria-label={`Follow Momen Fawzy Interior Design Studio on ${social.label} (opens in a new tab)`}
+        >
+          <span class="flex items-center justify-between">
+            <span class="grid size-12 place-items-center border border-border text-accent transition-colors group-hover:border-accent">
+              <ContactIcon
+                name={
+                  social.id === 'facebook'
+                    ? 'facebook'
+                    : social.id === 'instagram'
+                      ? 'instagram'
+                      : 'youtube'
+                }
+                class="size-5"
+              />
+            </span>
+            <ContactIcon
+              name="external"
+              class="size-4 text-muted transition group-hover:translate-x-1 group-hover:text-accent"
+            />
+          </span>
+          <span>
+            <span class="block font-display text-3xl text-white/92 transition-colors group-hover:text-accent">
+              {social.label}
+            </span>
+            <span class="mt-2 block text-sm leading-6 text-muted">{social.description}</span>
+          </span>
+        </a>
+      ))}
+    </div>
+  </Container>
+</Section>

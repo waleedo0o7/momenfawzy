@@ -1,0 +1,39 @@
+---
+import { isActivePath, primaryNavigation } from '../../config/navigation';
+
+interface Props {
+  pathname: string;
+}
+
+const { pathname } = Astro.props;
+---
+
+<nav aria-label="Primary navigation">
+  <ul class="flex items-center gap-6 2xl:gap-9" role="list">
+    {primaryNavigation.map((item) => {
+      const active = isActivePath(pathname, item.href);
+
+      return (
+        <li>
+          <a
+            href={item.href}
+            aria-current={active ? 'page' : undefined}
+            class:list={[
+              'relative block py-2 text-[0.64rem] font-semibold tracking-[0.14em] uppercase transition-colors duration-[var(--brand-duration-fast)] hover:text-accent focus-visible:text-accent 2xl:text-[0.68rem]',
+              active ? 'text-accent' : 'text-foreground',
+            ]}
+          >
+            {item.label}
+            <span
+              aria-hidden="true"
+              class:list={[
+                'absolute right-0 bottom-0 left-0 h-px origin-left bg-accent transition-transform duration-[var(--brand-duration-base)] ease-[var(--brand-ease-emphasized)]',
+                active ? 'scale-x-100' : 'scale-x-0',
+              ]}
+            />
+          </a>
+        </li>
+      );
+    })}
+  </ul>
+</nav>

@@ -1,0 +1,151 @@
+---
+import { Image } from 'astro:assets';
+
+import type { Service } from '../../data/services';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+
+interface Props {
+  services: readonly Service[];
+}
+
+const { services } = Astro.props;
+---
+
+<Section
+  id="services"
+  tone="surface"
+  labelledby="services-list-title"
+  class="overflow-hidden border-b border-border"
+>
+  <Container width="wide">
+    <div class="grid gap-9 border-b border-border pb-12 lg:grid-cols-12 lg:items-end lg:pb-16">
+      <div class="lg:col-span-7">
+        <p class="eyebrow">Complete Project Capabilities</p>
+        <h2
+          id="services-list-title"
+          class="mt-6 max-w-[10ch] font-display text-[clamp(3.6rem,6.4vw,7.4rem)] leading-[0.84] tracking-[-0.048em]"
+        >
+          Every Stage, <span class="text-accent italic">Thoughtfully Coordinated.</span>
+        </h2>
+      </div>
+      <p class="max-w-[34rem] text-base leading-[1.85] text-muted lg:col-span-4 lg:col-start-9 lg:text-[1.0625rem]">
+        Creative direction, technical planning, sourcing, execution, and aftercare come together in
+        one considered journey—giving you clarity from the first conversation to the final detail.
+      </p>
+    </div>
+
+    <nav class="border-b border-border py-8 lg:py-10" aria-label="Services on this page">
+      <ol class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-y-8">
+        {services.map((service, index) => (
+          <li>
+            <a
+              href={`#${service.slug}`}
+              class="group grid grid-cols-[2rem_1fr] items-start border-t border-border pt-4 text-[0.62rem] leading-5 tracking-[0.12em] text-muted uppercase transition-colors hover:border-accent hover:text-accent focus-visible:border-accent focus-visible:text-accent focus-visible:outline-none"
+            >
+              <span class="text-accent">{String(index + 1).padStart(2, '0')}</span>
+              <span>{service.title}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <div class="mt-12 grid border-t border-l border-border lg:mt-16 lg:grid-cols-2">
+      {services.map((service, index) => {
+        const isFeatured = index === services.length - 1;
+        const number = String(index + 1).padStart(2, '0');
+
+        return (
+          <article
+            id={service.slug}
+            class:list={[
+              'scroll-mt-28 border-r border-b border-border bg-canvas',
+              isFeatured && 'lg:col-span-2',
+            ]}
+          >
+            <div class:list={[isFeatured && 'lg:grid lg:grid-cols-12']}>
+              <figure
+                class:list={[
+                  'group relative aspect-[16/10] overflow-hidden bg-surface',
+                  isFeatured && 'lg:col-span-5 lg:h-full lg:min-h-[46rem] lg:aspect-auto',
+                ]}
+              >
+                <Image
+                  src={service.image}
+                  alt={service.imageAlt}
+                  widths={[640, 960, 1280, 1600]}
+                  sizes={
+                    isFeatured
+                      ? '(max-width: 1023px) 100vw, 42vw'
+                      : '(max-width: 1023px) 100vw, 50vw'
+                  }
+                  format="webp"
+                  quality={86}
+                  loading="lazy"
+                  style={`object-position: ${service.imagePosition ?? 'center'}`}
+                  class="h-full w-full object-cover transition-transform duration-700 ease-[var(--brand-ease-emphasized)] group-hover:scale-[1.018]"
+                />
+                <div
+                  class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent"
+                  aria-hidden="true"
+                ></div>
+                <span class="absolute right-5 bottom-5 text-[0.6rem] font-bold tracking-[0.18em] text-white/75 uppercase">
+                  Service {number}
+                </span>
+              </figure>
+
+              <div
+                class:list={[
+                  'p-[clamp(1.5rem,4vw,4rem)]',
+                  isFeatured && 'lg:col-span-7 lg:flex lg:flex-col lg:justify-center',
+                ]}
+              >
+                <p class="text-[0.62rem] font-bold tracking-[0.2em] text-accent uppercase">
+                  {number} · Our Services
+                </p>
+                <h3 class="mt-5 max-w-[14ch] font-display text-[clamp(2.65rem,4.2vw,5rem)] leading-[0.9] tracking-[-0.04em]">
+                  {service.title}
+                </h3>
+                <p class="mt-6 max-w-[32rem] font-display text-[clamp(1.55rem,2vw,2.1rem)] leading-[1.08] text-accent italic">
+                  {service.benefitHeading}
+                </p>
+                <p class="mt-6 max-w-[42rem] text-[0.95rem] leading-[1.85] text-muted sm:text-base">
+                  {service.description}
+                </p>
+
+                <div
+                  class:list={[
+                    'mt-8 grid gap-8 border-t border-border pt-7',
+                    service.capabilityGroups.length > 1 && 'sm:grid-cols-2',
+                  ]}
+                >
+                  {service.capabilityGroups.map((group) => (
+                    <div>
+                      {group.title && (
+                        <h4 class="mb-4 font-body text-[0.6rem] font-bold tracking-[0.17em] text-accent uppercase">
+                          {group.title}
+                        </h4>
+                      )}
+                      <ul class="grid gap-3" role="list">
+                        {group.items.map((item) => (
+                          <li class="flex gap-3 text-sm leading-6 text-white/68">
+                            <span
+                              class="mt-[0.7rem] h-px w-4 shrink-0 bg-accent/75"
+                              aria-hidden="true"
+                            ></span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </Container>
+</Section>

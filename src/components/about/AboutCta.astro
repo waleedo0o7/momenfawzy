@@ -1,0 +1,42 @@
+---
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+---
+
+<section
+  aria-labelledby="about-cta-title"
+  class="relative isolate overflow-hidden border-b border-border bg-surface py-[clamp(8rem,13vw,13rem)]"
+>
+  <div
+    class="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_50%_44%,rgba(201,159,112,0.14),transparent_36%),linear-gradient(180deg,rgba(16,17,15,0.2),rgba(16,17,15,0.72))]"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="absolute top-0 left-1/2 -z-10 h-px w-[min(82rem,86vw)] -translate-x-1/2 bg-gradient-to-r from-transparent via-accent/50 to-transparent"
+    aria-hidden="true"
+  ></div>
+  <div class="absolute inset-y-0 left-[16%] -z-10 w-px bg-white/10" aria-hidden="true"></div>
+  <div class="absolute inset-y-0 right-[22%] -z-10 w-px bg-white/10" aria-hidden="true"></div>
+  <Container width="wide">
+    <div class="about-reveal mx-auto max-w-[78rem] text-center">
+      <p class="eyebrow">Start a Conversation</p>
+      <h2
+        id="about-cta-title"
+        class="mt-7 font-display text-[clamp(3.8rem,7.8vw,9rem)] leading-[0.82] tracking-[-0.052em]"
+      >
+        Let’s Bring Your <span class="text-accent italic">Vision to Life.</span>
+      </h2>
+      <p class="mx-auto mt-9 max-w-[44rem] text-[1.0625rem] leading-[1.8] text-white/68 sm:text-lg">
+        Explore the possibilities of a space designed with purpose and delivered with precision.
+      </p>
+      <div class="mt-11 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5">
+        <Button href="/contact/">
+          Schedule a Consultation <span aria-hidden="true">→</span>
+        </Button>
+        <Button href="/projects/" variant="outline">
+          Explore Our Projects <span aria-hidden="true">→</span>
+        </Button>
+      </div>
+    </div>
+  </Container>
+</section>

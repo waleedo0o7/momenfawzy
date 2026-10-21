@@ -1,0 +1,26 @@
+---
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+---
+
+<section aria-labelledby="project-cta-title" class="bg-surface py-[clamp(7rem,12vw,12rem)]">
+  <Container width="wide">
+    <div class="mx-auto max-w-[70rem] text-center">
+      <p class="eyebrow">Your Project</p>
+      <h2
+        id="project-cta-title"
+        class="mt-7 font-display text-[clamp(3.7rem,7vw,8rem)] leading-[0.84] tracking-[-0.05em]"
+      >
+        Let’s Shape What Comes <span class="text-accent italic">Next.</span>
+      </h2>
+      <p class="mx-auto mt-8 max-w-[38rem] text-base leading-8 text-muted sm:text-lg">
+        Share your ambitions for the space, and begin a considered design conversation.
+      </p>
+      <div class="mt-10 flex justify-center">
+        <Button href="/contact/">
+          Discuss Your Project <span aria-hidden="true">→</span>
+        </Button>
+      </div>
+    </div>
+  </Container>
+</section>

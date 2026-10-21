@@ -1,0 +1,34 @@
+---
+import { SITE_NAME } from '../../utils/site';
+import BrandLogo from '../brand/BrandLogo.astro';
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+import DesktopNavigation from './DesktopNavigation.astro';
+import MobileNavigation from './MobileNavigation.astro';
+
+interface Props {
+  pathname: string;
+}
+
+const { pathname } = Astro.props;
+---
+
+<header class="sticky top-0 z-50 border-b border-border bg-canvas/92 backdrop-blur-md">
+  <Container width="wide">
+    <div class="relative flex min-h-[5.25rem] items-center justify-between gap-7">
+      <a href="/" class="inline-flex shrink-0" aria-label={`${SITE_NAME}, home`}>
+        <BrandLogo size="header" priority />
+      </a>
+
+      <div class="ml-auto hidden items-center gap-8 lg:flex">
+        <DesktopNavigation {pathname} />
+        <div class="hidden xl:block">
+          <Button href="/contact/" variant="outline" class="min-h-10 px-5 py-2">
+            Consultation <span aria-hidden="true">→</span>
+          </Button>
+        </div>
+      </div>
+      <MobileNavigation {pathname} />
+    </div>
+  </Container>
+</header>

@@ -1,0 +1,75 @@
+---
+import type { ProjectEntry } from '../../lib/content';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+
+interface Props {
+  project: ProjectEntry;
+}
+
+const { project } = Astro.props;
+const specifications = project.data.specifications;
+---
+
+<Section labelledby="project-overview-title" class="border-b border-border">
+  <Container width="wide">
+    <div class="grid gap-14 lg:grid-cols-12 lg:gap-12">
+      <div class="lg:col-span-7">
+        <p class="eyebrow">Project Overview</p>
+        <h2
+          id="project-overview-title"
+          class="mt-6 max-w-[12ch] font-display text-[clamp(3.4rem,5.6vw,6.7rem)] leading-[0.87] tracking-[-0.045em]"
+        >
+          The Story Behind <span class="text-accent italic">the Space.</span>
+        </h2>
+        <p class="mt-9 max-w-[45rem] text-xl leading-[1.65] text-white/82">
+          {project.data.shortDescription}
+        </p>
+        {project.data.fullDescription && (
+          <p class="mt-6 max-w-[45rem] text-base leading-[1.85] text-muted sm:text-lg">
+            {project.data.fullDescription}
+          </p>
+        )}
+        <div class="project-body mt-8 max-w-[45rem] leading-8 text-muted">
+          <slot />
+        </div>
+      </div>
+
+      {specifications && (
+        <aside class="lg:col-span-4 lg:col-start-9" aria-label="Verified project specifications">
+          <p class="border-b border-border pb-5 text-[0.64rem] font-bold tracking-[0.18em] text-accent uppercase">
+            Project Details
+          </p>
+          <dl>
+            {specifications.area && (
+              <div class="grid grid-cols-[6rem_1fr] gap-6 border-b border-border py-5">
+                <dt class="text-[0.62rem] tracking-[0.15em] text-muted uppercase">Area</dt>
+                <dd class="text-sm text-white/80">{specifications.area}</dd>
+              </div>
+            )}
+            {specifications.scope && (
+              <div class="grid grid-cols-[6rem_1fr] gap-6 border-b border-border py-5">
+                <dt class="text-[0.62rem] tracking-[0.15em] text-muted uppercase">Scope</dt>
+                <dd class="text-sm text-white/80">{specifications.scope}</dd>
+              </div>
+            )}
+            {specifications.services && (
+              <div class="grid grid-cols-[6rem_1fr] gap-6 border-b border-border py-5">
+                <dt class="text-[0.62rem] tracking-[0.15em] text-muted uppercase">Services</dt>
+                <dd class="text-sm leading-7 text-white/80">
+                  {specifications.services.join(', ')}
+                </dd>
+              </div>
+            )}
+          </dl>
+        </aside>
+      )}
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .project-body:empty {
+    display: none;
+  }
+</style>

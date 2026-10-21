@@ -1,0 +1,21 @@
+---
+import ServicesApproach from '../../components/services/ServicesApproach.astro';
+import ServicesCta from '../../components/services/ServicesCta.astro';
+import ServicesHero from '../../components/services/ServicesHero.astro';
+import ServicesShowcase from '../../components/services/ServicesShowcase.astro';
+import { activeServices, activeServiceWorkflow, servicesHeroMedia } from '../../data/services';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'Interior Design, Fit-Out & Project Delivery Services | Momen Fawzy';
+const description =
+  'Explore interior design, 3D visualization, technical drawings, fit-out, furnishing, landscape, project management, quality control, and aftercare services.';
+---
+
+<BaseLayout {title} {description}>
+  <main id="main-content">
+    <ServicesHero image={servicesHeroMedia.image} imageAlt={servicesHeroMedia.alt} />
+    <ServicesShowcase services={activeServices} />
+    <ServicesApproach steps={activeServiceWorkflow} />
+    <ServicesCta />
+  </main>
+</BaseLayout>

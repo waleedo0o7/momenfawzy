@@ -1,0 +1,65 @@
+---
+import { Image } from 'astro:assets';
+
+import heroImage from '../../assets/images/projects/al-fatah-shipping-company/01-cover.jpg';
+import Container from '../ui/Container.astro';
+---
+
+<section
+  aria-labelledby="contact-hero-title"
+  class="relative isolate min-h-[46rem] overflow-hidden border-b border-border sm:min-h-[56rem] lg:min-h-[calc(100svh-5.25rem)]"
+>
+  <Image
+    src={heroImage}
+    alt=""
+    widths={[720, 1080, 1440, 1920]}
+    sizes="100vw"
+    format="webp"
+    quality={89}
+    priority
+    class="absolute inset-0 -z-30 h-full w-full object-cover object-center"
+  />
+  <div
+    class="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(10,11,9,0.9)_0%,rgba(10,11,9,0.58)_52%,rgba(10,11,9,0.3)_100%),linear-gradient(0deg,rgba(10,11,9,0.92)_0%,transparent_62%)]"
+    aria-hidden="true"
+  ></div>
+
+  <Container
+    width="wide"
+    class="flex min-h-[46rem] items-end sm:min-h-[56rem] lg:min-h-[calc(100svh-5.25rem)]"
+  >
+    <div class="contact-hero-copy w-full pb-[clamp(5rem,9vw,8.5rem)] pt-40">
+      <p class="eyebrow">Let's Connect</p>
+      <h1
+        id="contact-hero-title"
+        class="mt-7 max-w-[10ch] font-display text-[clamp(4rem,8.3vw,9.5rem)] leading-[0.8] tracking-[-0.055em]"
+      >
+        Let's Create Something <span class="text-accent italic">Exceptional.</span>
+      </h1>
+      <div class="mt-10 max-w-[82rem]">
+        <p class="max-w-[42rem] text-[clamp(1.0625rem,1.25vw,1.25rem)] leading-[1.8] text-white/80">
+          Have a project in mind? Share your vision with our studio and let's begin the
+          conversation.
+        </p>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .contact-hero-copy {
+    animation: contact-hero-in 800ms var(--brand-ease-emphasized) both;
+  }
+
+  @keyframes contact-hero-in {
+    from {
+      transform: translateY(1.25rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .contact-hero-copy {
+      animation: none;
+    }
+  }
+</style>

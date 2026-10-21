@@ -1,0 +1,50 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  level?: 1 | 2 | 3;
+  id?: string;
+  align?: 'start' | 'center';
+  tone?: 'dark' | 'light';
+  class?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  level = 2,
+  id,
+  align = 'start',
+  tone = 'dark',
+  class: className,
+} = Astro.props;
+const HeadingTag = `h${level}` as 'h1' | 'h2' | 'h3';
+const eyebrowColor = tone === 'light' ? 'text-ink-muted' : 'text-accent';
+const descriptionColor = tone === 'light' ? 'text-ink-muted' : 'text-muted';
+---
+
+<header
+  class:list={[
+    'max-w-[var(--brand-content-copy)]',
+    align === 'center' && 'mx-auto text-center',
+    className,
+  ]}
+>
+  {eyebrow && (
+    <p
+      class:list={['mb-5 text-brand-label font-semibold tracking-[0.18em] uppercase', eyebrowColor]}
+    >
+      {eyebrow}
+    </p>
+  )}
+  <HeadingTag {id} class="text-brand-title leading-[1.05] tracking-[-0.02em]">
+    {title}
+  </HeadingTag>
+  {description && (
+    <p class:list={['mt-6 max-w-[40rem] text-brand-lead leading-[1.75]', descriptionColor]}>
+      {description}
+    </p>
+  )}
+</header>

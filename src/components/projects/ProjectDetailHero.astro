@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+
+import type { ProjectEntry } from '../../lib/content';
+import Container from '../ui/Container.astro';
+
+interface Props {
+  project: ProjectEntry;
+}
+
+const { project } = Astro.props;
+---
+
+<section
+  aria-labelledby="project-title"
+  class="relative isolate min-h-[48rem] overflow-hidden border-b border-border sm:min-h-[58rem] lg:min-h-[calc(100svh-5.25rem)]"
+>
+  <Image
+    src={project.data.coverImage}
+    alt={project.data.imageAlt}
+    widths={[720, 1080, 1440, 1920]}
+    sizes="100vw"
+    format="webp"
+    quality={90}
+    priority
+    class="absolute inset-0 -z-30 h-full w-full object-cover"
+  />
+  <div
+    class="absolute inset-0 -z-20 bg-[linear-gradient(0deg,rgba(10,11,9,0.95)_0%,rgba(10,11,9,0.32)_65%,rgba(10,11,9,0.18)_100%),linear-gradient(90deg,rgba(10,11,9,0.76)_0%,transparent_62%)]"
+    aria-hidden="true"
+  ></div>
+
+  <Container
+    width="wide"
+    class="flex min-h-[48rem] items-end sm:min-h-[58rem] lg:min-h-[calc(100svh-5.25rem)]"
+  >
+    <div class="w-full pb-[clamp(5rem,9vw,8rem)] pt-40">
+      <p class="eyebrow">
+        {[project.data.category, project.data.projectStage].filter(Boolean).join(' · ')}
+      </p>
+      <h1
+        id="project-title"
+        class="mt-7 max-w-[12ch] font-display text-[clamp(4rem,8vw,9rem)] leading-[0.82] tracking-[-0.052em]"
+      >
+        {project.data.title}
+      </h1>
+      {(project.data.location || project.data.year) && (
+        <p class="mt-8 text-xs font-bold tracking-[0.17em] text-white/68 uppercase">
+          {[project.data.location, project.data.year].filter(Boolean).join(' · ')}
+        </p>
+      )}
+    </div>
+  </Container>
+</section>

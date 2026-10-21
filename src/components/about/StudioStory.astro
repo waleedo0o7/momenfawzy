@@ -1,0 +1,58 @@
+---
+import { Image } from 'astro:assets';
+
+import storyPortrait from '../../assets/images/about/momen-about-story.png';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+---
+
+<Section labelledby="studio-story-title" class="border-b border-border">
+  <Container width="wide">
+    <div class="about-reveal grid gap-10 lg:grid-cols-12 lg:items-start lg:gap-x-12 xl:gap-x-16">
+      <div class="lg:col-span-5">
+        <p class="eyebrow">The Story Behind the Studio</p>
+        <h2
+          id="studio-story-title"
+          class="mt-6 max-w-[11ch] font-display text-[clamp(3.5rem,6vw,7rem)] leading-[0.88] tracking-[-0.045em]"
+        >
+          A Journey Shaped by <span class="text-accent italic">Design and Execution.</span>
+        </h2>
+      </div>
+      <div class="space-y-6 text-[1.0625rem] leading-[1.85] text-muted sm:text-lg lg:col-span-6 lg:col-start-7 lg:pt-8">
+        <p>
+          Momen Fawzy is the founder of Momen Fawzy Interior Design, a boutique practice
+          specializing in bespoke residential, commercial, hospitality, and high-end interior
+          projects.
+        </p>
+        <p>
+          With experience spanning Cairo, Alexandria, Dubai, and the wider GCC, his work brings
+          together creative design thinking, technical knowledge, and practical project execution.
+        </p>
+        <p>
+          His professional experience covers the complete project cycle, from concept development
+          and space planning to design detailing, material selection, coordination, and fit-out
+          delivery.
+        </p>
+      </div>
+    </div>
+
+    <figure class="about-reveal mt-14 lg:mt-16 lg:mx-[4.166%]">
+      <div class="aspect-[4/3] overflow-hidden bg-surface sm:aspect-[16/9] lg:aspect-[2/1]">
+        <Image
+          src={storyPortrait}
+          alt="Momen Fawzy seated in profile during a studio portrait session"
+          widths={[720, 1080, 1440, 1920]}
+          sizes="(max-width: 1023px) 100vw, 88vw"
+          format="webp"
+          quality={88}
+          loading="lazy"
+          class="h-full w-full object-cover object-[52%_43%] transition-transform duration-700 ease-[var(--brand-ease-emphasized)] hover:scale-[1.012]"
+        />
+      </div>
+      <figcaption class="mt-4 flex items-center gap-4 text-[0.62rem] tracking-[0.18em] text-muted uppercase">
+        <span class="h-px w-8 bg-accent" aria-hidden="true"></span>
+        Founder · Interior Designer · Entrepreneur
+      </figcaption>
+    </figure>
+  </Container>
+</Section>

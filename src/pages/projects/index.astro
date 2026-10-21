@@ -1,0 +1,30 @@
+---
+import portfolioFallback from '../../assets/images/projects/zezenia-apartment/01-cover.jpeg';
+import ProjectsCta from '../../components/projects/ProjectsCta.astro';
+import ProjectsGallery from '../../components/projects/ProjectsGallery.astro';
+import ProjectsHero from '../../components/projects/ProjectsHero.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPortfolioProjects, getPublishedProjects } from '../../lib/content';
+
+const title = 'Interior Design Projects';
+const description =
+  'Explore residential, commercial, and hospitality interiors by Momen Fawzy Interior Design Studio.';
+const [projects, publishedProjects] = await Promise.all([
+  getPortfolioProjects(),
+  getPublishedProjects(),
+]);
+const heroProject = projects[0];
+---
+
+<BaseLayout {title} {description} noindex={publishedProjects.length === 0}>
+  <main id="main-content">
+    <ProjectsHero
+      image={heroProject?.data.coverImage ?? portfolioFallback}
+      imageAlt={
+        heroProject?.data.imageAlt ?? 'Contemporary interior by Momen Fawzy Interior Design'
+      }
+    />
+    <ProjectsGallery {projects} />
+    <ProjectsCta />
+  </main>
+</BaseLayout>

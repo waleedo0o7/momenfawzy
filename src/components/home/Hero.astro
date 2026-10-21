@@ -1,0 +1,91 @@
+---
+import { Image } from 'astro:assets';
+
+import heroBackground from '../../assets/images/hero-background.png';
+import heroPortrait from '../../assets/images/momen-hero-cutout.png';
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+---
+
+<section
+  class="hero relative isolate overflow-hidden border-b border-border"
+  aria-labelledby="hero-title"
+  style={`background-image: url("${heroBackground.src}"); background-size: cover; background-position: center;`}
+>
+  <div
+    class="pointer-events-none absolute inset-0 z-0"
+    style="background-color: color-mix(in oklab, var(--color-black) 50%, transparent);"
+    aria-hidden="true"
+  ></div>
+
+  <Container width="wide" class="relative z-10">
+    <div class="relative min-h-[48rem] pt-20 pb-0 md:min-h-[64rem] md:pt-28 xl:min-h-[calc(100svh-5.25rem)] xl:pt-0 2xl:min-h-[54rem]">
+      <div class="hero-copy relative z-20 max-w-[42rem] py-10 md:py-14 xl:flex xl:min-h-[calc(100svh-5.25rem)] xl:flex-col xl:justify-center xl:py-20 2xl:min-h-[54rem]">
+        <p class="eyebrow">Interior Design · Fit-Out · Consultancy</p>
+        <h1
+          id="hero-title"
+          class="mt-6 font-display text-[clamp(3.15rem,6.35vw,7.1rem)] leading-[0.82] font-medium tracking-[-0.045em]"
+        >
+          Designing Spaces With <span class="text-accent italic">Purpose, Presence,</span> and
+          <span class="text-accent italic">Precision.</span>
+        </h1>
+        <p class="mt-8 max-w-[34rem] text-[clamp(0.95rem,1.2vw,1.125rem)] leading-8 text-muted">
+          Bespoke interior design and fit-out solutions, thoughtfully crafted across Egypt and the
+          GCC.
+        </p>
+        <div class="mt-9 flex flex-wrap items-center gap-x-9 gap-y-4">
+          <Button href="/contact/">
+            Schedule a Consultation <span aria-hidden="true">→</span>
+          </Button>
+          <Button href="/projects/" variant="text" class="editorial-link">
+            View Projects →
+          </Button>
+        </div>
+      </div>
+
+      <div class="hero-portrait relative z-10 mx-auto mt-4 h-[31rem] w-[min(122%,36rem)] -translate-x-[2%] sm:h-[40rem] md:h-[50rem] md:w-[44rem] xl:absolute xl:inset-y-0 xl:right-[-2%] xl:mt-0 xl:h-auto xl:w-[68%] xl:translate-x-0 2xl:right-0 2xl:w-[64%]">
+        <Image
+          src={heroPortrait}
+          alt="Momen Fawzy seated in a wooden armchair, facing the camera"
+          widths={[480, 640, 800, 1024, 1314]}
+          sizes="(max-width: 639px) 122vw, (max-width: 767px) 36rem, (max-width: 1279px) 44rem, 68vw"
+          format="webp"
+          quality={86}
+          priority
+          class="h-full w-full object-contain object-center-bottom xl:object-right-bottom"
+        />
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .hero-copy {
+    animation: hero-copy-in 850ms var(--brand-ease-emphasized) both;
+  }
+
+  .hero-portrait {
+    animation: hero-portrait-in 1100ms 100ms var(--brand-ease-emphasized) both;
+  }
+
+  @keyframes hero-copy-in {
+    from {
+      opacity: 0;
+      transform: translateY(1.25rem);
+    }
+  }
+
+  @keyframes hero-portrait-in {
+    from {
+      opacity: 0;
+      transform: translateY(2rem) scale(0.985);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-copy,
+    .hero-portrait {
+      animation: none;
+    }
+  }
+</style>

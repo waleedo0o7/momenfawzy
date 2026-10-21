@@ -1,0 +1,43 @@
+---
+import { Image } from 'astro:assets';
+
+import ctaImage from '../../assets/images/projects/valorie-residence/20-balcony.jpg';
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+---
+
+<section
+  id="project-inquiry"
+  aria-labelledby="project-inquiry-title"
+  class="relative isolate overflow-hidden py-[clamp(6rem,11vw,10rem)]"
+>
+  <Image
+    src={ctaImage}
+    alt=""
+    widths={[960, 1440, 1920]}
+    sizes="100vw"
+    loading="lazy"
+    quality={82}
+    class="absolute inset-0 -z-20 h-full w-full object-cover object-center"
+  />
+  <div class="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(11,12,10,0.96)_0%,rgba(11,12,10,0.86)_52%,rgba(11,12,10,0.35)_100%)]"></div>
+  <div class="absolute inset-y-0 left-[18%] -z-10 w-px bg-white/12" aria-hidden="true"></div>
+  <Container width="wide">
+    <div class="max-w-[63rem]">
+      <p class="eyebrow">Let’s Create Together</p>
+      <h2
+        id="project-inquiry-title"
+        class="mt-6 font-display text-[clamp(3.2rem,6.5vw,7.5rem)] leading-[0.86] tracking-[-0.045em]"
+      >
+        Ready to Discuss <span class="text-accent italic">Your Project?</span>
+      </h2>
+      <p class="mt-8 max-w-[40rem] text-base leading-8 text-white/70 sm:text-lg">
+        Whether you’re planning a new space or a complete transformation, the conversation starts
+        with your vision.
+      </p>
+      <Button href="/contact/" class="mt-10">
+        Schedule a Consultation <span aria-hidden="true">→</span>
+      </Button>
+    </div>
+  </Container>
+</section>

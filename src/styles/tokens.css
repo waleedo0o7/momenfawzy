@@ -1,0 +1,72 @@
+/* Provisional brand system. Components consume semantic tokens only. */
+:root {
+  --brand-color-canvas: #10110f;
+  --brand-color-surface: #191a17;
+  --brand-color-light: #eee9df;
+  --brand-color-text: #f3efe7;
+  --brand-color-text-muted: #aaa59d;
+  --brand-color-ink: #242321;
+  --brand-color-ink-muted: #625d56;
+  --brand-color-accent: #c99f70;
+  --brand-color-accent-hover: #dfba8f;
+  --brand-color-border: #35332f;
+  --brand-color-border-light: #d7d0c7;
+  --brand-color-focus: #f5f2ed;
+
+  --brand-font-display: 'Cormorant Garamond Variable', Georgia, 'Times New Roman', serif;
+  --brand-font-body:
+    'Manrope Variable', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+
+  --brand-text-xs: clamp(0.75rem, 0.72rem + 0.12vw, 0.8125rem);
+  --brand-text-sm: clamp(0.875rem, 0.84rem + 0.16vw, 0.9375rem);
+  --brand-text-base: clamp(1rem, 0.96rem + 0.18vw, 1.0625rem);
+  --brand-text-lg: clamp(1.125rem, 1.03rem + 0.4vw, 1.3125rem);
+  --brand-text-xl: clamp(1.375rem, 1.15rem + 0.9vw, 1.875rem);
+  --brand-text-2xl: clamp(2rem, 1.42rem + 2.5vw, 3.75rem);
+  --brand-text-display: clamp(2.75rem, 1.65rem + 4.6vw, 6rem);
+
+  --brand-space-1: 0.25rem;
+  --brand-space-2: 0.5rem;
+  --brand-space-3: 0.75rem;
+  --brand-space-4: 1rem;
+  --brand-space-5: 1.5rem;
+  --brand-space-6: 2rem;
+  --brand-space-7: 3rem;
+  --brand-space-8: 4rem;
+  --brand-space-page-inline: clamp(1.25rem, 4.2vw, 5.75rem);
+  --brand-space-section: clamp(4.5rem, calc(3.4rem + 5vw), 9.5rem);
+
+  --brand-content-wide: 105rem;
+  --brand-content-standard: 78rem;
+  --brand-content-copy: 46rem;
+
+  --brand-radius-sm: 0.125rem;
+  --brand-radius-pill: 999px;
+  --brand-duration-fast: 160ms;
+  --brand-duration-base: 280ms;
+  --brand-duration-slow: 520ms;
+  --brand-ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --brand-ease-emphasized: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@theme inline {
+  --color-canvas: var(--brand-color-canvas);
+  --color-surface: var(--brand-color-surface);
+  --color-light: var(--brand-color-light);
+  --color-foreground: var(--brand-color-text);
+  --color-muted: var(--brand-color-text-muted);
+  --color-ink: var(--brand-color-ink);
+  --color-ink-muted: var(--brand-color-ink-muted);
+  --color-accent: var(--brand-color-accent);
+  --color-accent-hover: var(--brand-color-accent-hover);
+  --color-border: var(--brand-color-border);
+  --color-border-light: var(--brand-color-border-light);
+  --font-display: var(--brand-font-display);
+  --font-body: var(--brand-font-body);
+  --text-brand-label: var(--brand-text-xs);
+  --text-brand-body: var(--brand-text-base);
+  --text-brand-lead: var(--brand-text-lg);
+  --text-brand-title: var(--brand-text-2xl);
+  --text-brand-display: var(--brand-text-display);
+}

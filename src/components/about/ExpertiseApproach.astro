@@ -1,0 +1,67 @@
+---
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+
+const expertise = [
+  {
+    title: 'Concept Development & Space Planning',
+    detail: 'Translating the brief into a clear spatial direction and considered plan.',
+  },
+  {
+    title: 'Interior Design & Design Detailing',
+    detail: 'Developing the interior language through coordinated design and precise detailing.',
+  },
+  {
+    title: 'Materials, Finishes & Lighting',
+    detail: 'Building a cohesive palette around atmosphere, performance, and lasting value.',
+  },
+  {
+    title: 'Project Coordination',
+    detail: 'Connecting design intent with consultants, suppliers, and delivery requirements.',
+  },
+  {
+    title: 'Fit-Out Execution & Site Supervision',
+    detail: 'Carrying the concept through execution, site review, and quality control.',
+  },
+] as const;
+---
+
+<Section tone="surface" labelledby="expertise-title" class="border-b border-border">
+  <Container width="wide">
+    <div class="about-reveal grid gap-10 lg:grid-cols-12 lg:gap-8">
+      <div class="lg:col-span-7">
+        <p class="eyebrow">Expertise & Design Approach</p>
+        <h2
+          id="expertise-title"
+          class="mt-6 max-w-[11ch] font-display text-[clamp(3.5rem,6vw,7rem)] leading-[0.88] tracking-[-0.045em]"
+        >
+          From Concept to <span class="text-accent italic">Completion.</span>
+        </h2>
+      </div>
+      <p class="max-w-[36rem] text-[1.0625rem] leading-[1.8] text-muted sm:text-lg lg:col-span-4 lg:col-start-9 lg:pt-14">
+        A connected process where creative direction, technical resolution, and on-site delivery
+        support one another from the first decision to the final detail.
+      </p>
+    </div>
+
+    <ol class="about-reveal mt-16 border-t border-border/90 lg:mt-20">
+      {expertise.map((item, index) => (
+        <li class="group relative grid gap-4 overflow-hidden border-b border-border/90 py-8 transition-colors duration-300 hover:border-accent/60 sm:py-10 lg:grid-cols-12 lg:items-center lg:gap-8">
+          <span
+            class="absolute inset-y-0 left-0 w-px origin-bottom scale-y-0 bg-accent transition-transform duration-500 ease-[var(--brand-ease-emphasized)] group-hover:scale-y-100"
+            aria-hidden="true"
+          ></span>
+          <span class="text-[0.65rem] tracking-[0.2em] text-accent transition-transform duration-300 group-hover:translate-x-2 lg:col-span-1">
+            {String(index + 1).padStart(2, '0')}
+          </span>
+          <h3 class="font-display text-[clamp(2rem,3vw,3.2rem)] leading-[0.98] transition-transform duration-500 ease-[var(--brand-ease-emphasized)] group-hover:translate-x-2 lg:col-span-6">
+            {item.title}
+          </h3>
+          <p class="max-w-[36rem] text-base leading-[1.75] text-muted transition-colors duration-300 group-hover:text-white/75 sm:text-[1.0625rem] lg:col-span-4 lg:col-start-9">
+            {item.detail}
+          </p>
+        </li>
+      ))}
+    </ol>
+  </Container>
+</Section>

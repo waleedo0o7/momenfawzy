@@ -1,0 +1,72 @@
+---
+import { Image } from 'astro:assets';
+
+import experiencePortrait from '../../assets/images/about/momen-about-experience.png';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+
+const sectors = ['Residential', 'Commercial', 'Hospitality', 'High-End Interiors'] as const;
+---
+
+<Section tone="surface" labelledby="borders-title" class="overflow-hidden border-b border-border">
+  <Container width="wide">
+    <div class="grid gap-14 lg:grid-cols-12 lg:items-stretch lg:gap-12 xl:gap-20">
+      <figure class="about-reveal lg:col-span-6">
+        <div class="aspect-[4/5] overflow-hidden bg-canvas lg:h-full lg:min-h-[46rem] lg:aspect-auto">
+          <Image
+            src={experiencePortrait}
+            alt="Close portrait of Momen Fawzy in profile"
+            widths={[560, 800, 1080]}
+            sizes="(max-width: 1023px) 100vw, 50vw"
+            format="webp"
+            quality={88}
+            loading="lazy"
+            class="h-full w-full object-cover object-[52%_center] transition-transform duration-700 ease-[var(--brand-ease-emphasized)] hover:scale-[1.015]"
+          />
+        </div>
+      </figure>
+
+      <div class="about-reveal flex flex-col justify-center lg:col-span-6 lg:py-12">
+        <p class="eyebrow">Experience Across Borders</p>
+        <h2
+          id="borders-title"
+          class="mt-6 max-w-[10ch] font-display text-[clamp(3.5rem,6vw,7rem)] leading-[0.88] tracking-[-0.045em]"
+        >
+          Experience Beyond <span class="text-accent italic">Boundaries.</span>
+        </h2>
+        <p class="mt-8 max-w-[42rem] text-[1.0625rem] leading-[1.8] text-muted sm:text-lg">
+          Work across Cairo, Alexandria, Dubai, and the wider GCC has shaped a practical
+          understanding of different design expectations, execution conditions, and commercial
+          requirements.
+        </p>
+
+        <dl class="mt-10 grid border-y border-border sm:grid-cols-[0.8fr_1.35fr_1fr]">
+          <div class="border-b border-border py-7 sm:border-r sm:border-b-0 sm:pr-6">
+            <dt class="text-[0.62rem] tracking-[0.18em] text-muted uppercase">Experience</dt>
+            <dd class="mt-2 font-display text-6xl leading-none text-accent sm:text-7xl">15+</dd>
+            <dd class="text-xs text-muted">Years</dd>
+          </div>
+          <div class="border-b border-border py-7 sm:border-r sm:border-b-0 sm:px-6">
+            <dt class="text-[0.62rem] tracking-[0.18em] text-muted uppercase">Principal Cities</dt>
+            <dd class="mt-4 font-display text-[1.65rem] leading-tight">
+              Cairo · Alexandria · Dubai
+            </dd>
+          </div>
+          <div class="py-7 sm:pl-6">
+            <dt class="text-[0.62rem] tracking-[0.18em] text-muted uppercase">Markets</dt>
+            <dd class="mt-4 font-display text-3xl text-accent">Egypt & GCC</dd>
+          </div>
+        </dl>
+
+        <ul class="mt-10 flex flex-wrap gap-x-7 gap-y-3 text-[0.68rem] font-bold tracking-[0.14em] text-white/70 uppercase">
+          {sectors.map((sector) => (
+            <li class="flex items-center gap-3">
+              <span class="h-px w-5 bg-accent" aria-hidden="true"></span>
+              {sector}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </Container>
+</Section>

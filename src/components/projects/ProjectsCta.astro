@@ -1,0 +1,36 @@
+---
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+---
+
+<section
+  aria-labelledby="projects-cta-title"
+  class="relative isolate overflow-hidden border-b border-border py-[clamp(8rem,13vw,13rem)]"
+>
+  <div
+    class="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_70%_40%,rgba(201,159,112,0.12),transparent_30%),linear-gradient(135deg,rgba(25,26,23,0.94),rgba(10,11,9,0.98))]"
+    aria-hidden="true"
+  ></div>
+  <div class="absolute inset-y-0 left-[12%] -z-10 w-px bg-white/10" aria-hidden="true"></div>
+  <div class="absolute inset-y-0 right-[22%] -z-10 w-px bg-white/10" aria-hidden="true"></div>
+
+  <Container width="wide">
+    <div class="mx-auto max-w-[78rem] text-center">
+      <p class="eyebrow">Begin a Conversation</p>
+      <h2
+        id="projects-cta-title"
+        class="mt-7 font-display text-[clamp(3.8rem,7.5vw,8.7rem)] leading-[0.83] tracking-[-0.052em]"
+      >
+        Have a Space <span class="text-accent italic">in Mind?</span>
+      </h2>
+      <p class="mx-auto mt-9 max-w-[42rem] text-[1.0625rem] leading-[1.8] text-white/70 sm:text-lg">
+        Let's explore how thoughtful design can bring your vision to life.
+      </p>
+      <div class="mt-11 flex justify-center">
+        <Button href="/contact/">
+          Discuss Your Project <span aria-hidden="true">→</span>
+        </Button>
+      </div>
+    </div>
+  </Container>
+</section>

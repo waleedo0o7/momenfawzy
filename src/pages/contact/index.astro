@@ -1,0 +1,25 @@
+---
+import ContactCta from '../../components/contact/ContactCta.astro';
+import ContactDepartments from '../../components/contact/ContactDepartments.astro';
+import ContactHero from '../../components/contact/ContactHero.astro';
+import ContactInquiry from '../../components/contact/ContactInquiry.astro';
+import ContactLocation from '../../components/contact/ContactLocation.astro';
+import ContactSocials from '../../components/contact/ContactSocials.astro';
+import { contactConfig } from '../../data/contact';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'Contact Momen Fawzy Interior Design Studio';
+const description =
+  'Contact Momen Fawzy Interior Design Studio about interior design and fit-out projects in Alexandria, Egypt, and across the GCC.';
+---
+
+<BaseLayout {title} {description}>
+  <main id="main-content">
+    <ContactHero />
+    <ContactInquiry contact={contactConfig} />
+    <ContactDepartments contact={contactConfig} />
+    <ContactLocation contact={contactConfig} />
+    <ContactSocials contact={contactConfig} />
+    <ContactCta contact={contactConfig} />
+  </main>
+</BaseLayout>

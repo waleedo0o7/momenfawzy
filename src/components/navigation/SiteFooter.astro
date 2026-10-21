@@ -1,0 +1,47 @@
+---
+import { primaryNavigation } from '../../config/navigation';
+import { SITE_NAME } from '../../utils/site';
+import BrandLogo from '../brand/BrandLogo.astro';
+import Container from '../ui/Container.astro';
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="border-t border-border bg-[#0c0d0b] text-foreground">
+  <Container width="wide" class="py-14 lg:py-18">
+    <div class="grid gap-12 border-b border-border pb-12 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-20">
+      <div>
+        <a href="/" class="inline-flex" aria-label={`${SITE_NAME}, home`}>
+          <BrandLogo size="footer" />
+        </a>
+        <p class="mt-5 max-w-lg text-sm leading-7 text-muted">
+          A founder-led interior design and fit-out practice serving Egypt and the GCC.
+        </p>
+      </div>
+
+      <nav aria-label="Footer navigation">
+        <ul
+          class="flex flex-wrap gap-x-7 gap-y-4 text-[0.68rem] font-semibold tracking-[0.12em] uppercase"
+          role="list"
+        >
+          {primaryNavigation.map((item) => (
+            <li>
+              <a href={item.href} class="editorial-link transition-colors hover:text-accent">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+
+    <div class="mt-7 flex flex-col gap-3 text-[0.65rem] tracking-[0.08em] text-muted uppercase sm:flex-row sm:items-center sm:justify-between">
+      <p>
+        &copy; {currentYear} {SITE_NAME}. All rights reserved.
+      </p>
+      <a href="/contact/" class="transition-colors hover:text-accent">
+        Start a conversation →
+      </a>
+    </div>
+  </Container>
+</footer>

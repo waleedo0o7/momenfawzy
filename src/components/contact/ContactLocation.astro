@@ -1,0 +1,65 @@
+---
+import type { ContactConfig } from '../../data/contact';
+import ContactIcon from './ContactIcon.astro';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+
+interface Props {
+  contact: ContactConfig;
+}
+
+const { contact } = Astro.props;
+---
+
+<Section labelledby="contact-location-title" tone="light" class="border-b border-ink/15">
+  <Container width="wide">
+    <div class="grid gap-12 lg:grid-cols-12 lg:items-end lg:gap-14">
+      <div class="lg:col-span-4 lg:pb-8">
+        <p class="text-[0.68rem] font-bold tracking-[0.19em] text-ink-muted uppercase">
+          Visit the Studio
+        </p>
+        <h2
+          id="contact-location-title"
+          class="mt-6 max-w-[8ch] font-display text-[clamp(3.5rem,5.6vw,6.7rem)] leading-[0.86] tracking-[-0.047em]"
+        >
+          Our Main <span class="italic">Office.</span>
+        </h2>
+        <address class="mt-8 max-w-[25rem] not-italic">
+          <p class="text-lg leading-8 text-ink-muted">{contact.office.address}</p>
+        </address>
+        <a
+          href={contact.office.directionsUrl}
+          target="_blank"
+          rel="noreferrer"
+          class="mt-8 inline-flex min-h-12 items-center gap-4 border border-ink bg-ink px-6 py-3 text-[0.68rem] font-bold tracking-[0.14em] text-light uppercase transition-colors hover:bg-accent hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+        >
+          Get Directions <ContactIcon name="external" class="size-4" />
+        </a>
+      </div>
+
+      <div class="overflow-hidden border border-ink/20 bg-ink/5 lg:col-span-8">
+        <iframe
+          src={contact.office.embedUrl}
+          title="Map showing Momen Fawzy Interior Design Studio Main Office in San Stefano, Alexandria"
+          class="aspect-[4/3] w-full border-0 sm:aspect-[16/9]"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen
+        ></iframe>
+        <div class="flex flex-col gap-3 border-t border-ink/20 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+          <span class="inline-flex items-center gap-3 text-[0.65rem] font-bold tracking-[0.14em] text-ink-muted uppercase">
+            <ContactIcon name="map" class="size-4" /> Alexandria, Egypt
+          </span>
+          <a
+            href={contact.office.directionsUrl}
+            target="_blank"
+            rel="noreferrer"
+            class="editorial-link inline-flex w-fit items-center gap-2 text-[0.65rem] font-bold tracking-[0.14em] uppercase"
+          >
+            Open full map <ContactIcon name="external" class="size-4" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </Container>
+</Section>

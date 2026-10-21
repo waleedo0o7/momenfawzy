@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+
+import SmoothScroll from '../components/common/SmoothScroll.astro';
+import WhatsAppButton from '../components/common/WhatsAppButton.astro';
+import SeoHead from '../components/seo/SeoHead.astro';
+import SiteFooter from '../components/navigation/SiteFooter.astro';
+import SiteHeader from '../components/navigation/SiteHeader.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  noindex?: boolean;
+  image?: string;
+}
+
+const { title, description, noindex = false, image } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <SeoHead {title} {description} {noindex} {image} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">
+      Skip to main content
+    </a>
+    <SiteHeader pathname={Astro.url.pathname} />
+    <slot />
+    <SiteFooter />
+    <WhatsAppButton />
+    <SmoothScroll />
+  </body>
+</html>

@@ -1,0 +1,17 @@
+---
+interface Props {
+  width?: 'standard' | 'wide' | 'copy';
+  class?: string;
+}
+
+const { width = 'standard', class: className } = Astro.props;
+const widths = {
+  standard: 'max-w-[var(--brand-content-standard)]',
+  wide: 'max-w-[var(--brand-content-wide)]',
+  copy: 'max-w-[var(--brand-content-copy)]',
+};
+---
+
+<div class:list={['mx-auto w-full px-[var(--brand-space-page-inline)]', widths[width], className]}>
+  <slot />
+</div>

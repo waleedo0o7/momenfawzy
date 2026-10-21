@@ -1,0 +1,24 @@
+---
+import AboutCta from '../../components/about/AboutCta.astro';
+import AboutHero from '../../components/about/AboutHero.astro';
+import BorderExperience from '../../components/about/BorderExperience.astro';
+import EducationTimeline from '../../components/about/EducationTimeline.astro';
+import ExpertiseApproach from '../../components/about/ExpertiseApproach.astro';
+import StudioStory from '../../components/about/StudioStory.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const title = 'About Momen Fawzy | Interior Designer & Entrepreneur';
+const description =
+  'Meet Momen Fawzy, an interior designer, fit-out professional, and entrepreneur with over 15 years of experience across Egypt and the GCC.';
+---
+
+<BaseLayout {title} {description}>
+  <main id="main-content" class="about-page">
+    <AboutHero />
+    <StudioStory />
+    <ExpertiseApproach />
+    <EducationTimeline />
+    <BorderExperience />
+    <AboutCta />
+  </main>
+</BaseLayout>

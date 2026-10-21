@@ -1,0 +1,38 @@
+---
+import Container from '../ui/Container.astro';
+
+interface Props {
+  count: number;
+}
+
+const { count } = Astro.props;
+---
+
+<section
+  aria-labelledby="media-hero-title"
+  class="border-b border-border bg-canvas py-[clamp(5rem,9vw,9rem)] text-foreground"
+>
+  <Container width="wide">
+    <div class="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:gap-24">
+      <div>
+        <p class="eyebrow">Media Center</p>
+        <h1
+          id="media-hero-title"
+          class="mt-7 max-w-[13ch] font-display text-[clamp(4rem,8vw,8.5rem)] leading-[0.82] tracking-[-0.05em]"
+        >
+          Design in <span class="text-accent italic">Motion.</span>
+        </h1>
+      </div>
+
+      <div class="max-w-xl lg:pb-3">
+        <p class="text-[clamp(1rem,1.4vw,1.25rem)] leading-8 text-muted">
+          Short-form perspectives on projects, site execution, and the decisions behind a finished
+          interior.
+        </p>
+        <p class="mt-8 border-t border-border pt-5 text-[0.67rem] font-bold tracking-[0.18em] text-accent uppercase">
+          {String(count).padStart(2, '0')} Published Films
+        </p>
+      </div>
+    </div>
+  </Container>
+</section>

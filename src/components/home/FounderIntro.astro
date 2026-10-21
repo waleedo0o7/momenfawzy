@@ -1,0 +1,86 @@
+---
+import { Image } from 'astro:assets';
+
+import founderPortrait from '../../assets/images/momen-founder-02.png';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+---
+
+<Section
+  id="about-momen"
+  labelledby="about-momen-title"
+  class="relative overflow-hidden border-b border-border"
+>
+  <div
+    class="pointer-events-none absolute top-0 bottom-0 left-[68%] w-px bg-border/45"
+    aria-hidden="true"
+  ></div>
+  <Container width="wide">
+    <div class="grid gap-12 lg:grid-cols-[0.78fr_1.3fr] lg:items-stretch lg:gap-18 xl:gap-24">
+      <div class="founder-image relative min-h-[34rem] overflow-hidden bg-[#1d1c18] sm:min-h-[43rem] lg:min-h-[48rem]">
+        <Image
+          src={founderPortrait}
+          alt="Portrait of Momen Fawzy"
+          widths={[480, 640, 800, 960]}
+          sizes="(max-width: 1023px) 100vw, 38vw"
+          format="webp"
+          quality={86}
+          loading="lazy"
+          class="absolute inset-0 h-full w-full object-cover object-[center_42%]"
+        />
+        <p class="absolute right-5 bottom-5 left-5 border-t border-white/20 pt-4 text-[0.62rem] tracking-[0.18em] text-white/60 uppercase">
+          Founder · Interior Designer · Entrepreneur
+        </p>
+      </div>
+
+      <div class="flex flex-col justify-center lg:py-8">
+        <p class="eyebrow">Meet Momen Fawzy</p>
+        <h2
+          id="about-momen-title"
+          class="mt-6 max-w-[49rem] font-display text-[clamp(2.9rem,5vw,5.7rem)] leading-[0.93] tracking-[-0.035em]"
+        >
+          Spaces should not only look considered. They should feel{' '}
+          <span class="text-accent italic">purposeful.</span>
+        </h2>
+        <p class="mt-8 max-w-[42rem] text-base leading-8 text-muted sm:text-lg">
+          Momen Fawzy is an interior designer, fit-out professional, and entrepreneur with more than
+          15 years of experience across Egypt and the GCC. His work connects thoughtful planning,
+          bespoke design, and disciplined execution across Cairo, Alexandria, and Dubai.
+        </p>
+
+        <dl class="mt-12 grid border-y border-border sm:grid-cols-3">
+          <div class="py-7 sm:border-r sm:border-border sm:pr-7">
+            <dt class="text-[0.65rem] tracking-[0.16em] text-muted uppercase">Experience</dt>
+            <dd class="mt-2 font-display text-5xl text-accent">15+</dd>
+            <dd class="text-xs text-muted">Years</dd>
+          </div>
+          <div class="border-t border-border py-7 sm:border-t-0 sm:border-r sm:px-7">
+            <dt class="text-[0.65rem] tracking-[0.16em] text-muted uppercase">Key cities</dt>
+            <dd class="mt-3 font-display text-2xl">Cairo · Alexandria · Dubai</dd>
+          </div>
+          <div class="border-t border-border py-7 sm:border-t-0 sm:pl-7">
+            <dt class="text-[0.65rem] tracking-[0.16em] text-muted uppercase">Practice</dt>
+            <dd class="mt-3 font-display text-2xl">Egypt &amp; GCC</dd>
+          </div>
+        </dl>
+
+        <a
+          href="/about/"
+          class="editorial-link mt-9 inline-flex w-fit items-center gap-3 text-xs font-bold tracking-[0.16em] uppercase"
+        >
+          Discover his approach <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </Container>
+</Section>
+
+<style>
+  .founder-image img {
+    transition: transform 800ms var(--brand-ease-emphasized);
+  }
+
+  .founder-image:hover img {
+    transform: scale(1.018);
+  }
+</style>

@@ -1,0 +1,179 @@
+<section
+  id="scrolling-statement"
+  class="scroll-marquee border-b border-border bg-canvas"
+  aria-labelledby="scroll-marquee-title"
+  data-scroll-marquee
+>
+  <h2 id="scroll-marquee-title" class="sr-only">
+    Designing spaces with purpose, presence, precision, and lasting value.
+  </h2>
+
+  <div class="marquee-row border-t border-border py-[clamp(1.5rem,3vw,3rem)]" aria-hidden="true">
+    <div class="marquee-track marquee-track-outline" data-marquee-track data-direction="forward">
+      <span>
+        Designing Spaces <em>With Purpose.</em>
+      </span>
+      <span>
+        Designing Spaces <em>With Purpose.</em>
+      </span>
+    </div>
+  </div>
+
+  <div class="marquee-row border-t border-border py-[clamp(1.5rem,3vw,3rem)]" aria-hidden="true">
+    <div class="marquee-track marquee-track-solid" data-marquee-track data-direction="reverse">
+      <span>
+        Presence. Precision. <em>Lasting Value.</em>
+      </span>
+      <span>
+        Presence. Precision. <em>Lasting Value.</em>
+      </span>
+    </div>
+  </div>
+</section>
+
+<script>
+  function initializeScrollMarquees() {
+    const marquees = document.querySelectorAll<HTMLElement>(
+      '[data-scroll-marquee]:not([data-marquee-ready])',
+    );
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    for (const marquee of marquees) {
+      marquee.dataset.marqueeReady = 'true';
+
+      const tracks = [...marquee.querySelectorAll<HTMLElement>('[data-marquee-track]')];
+      if (reduceMotion || tracks.length === 0) continue;
+
+      let isVisible = false;
+      let previousScrollY = window.scrollY;
+      let animationFrame = 0;
+      const speed = 0.16;
+      const states = tracks.map((track, index) => ({
+        track,
+        direction: track.dataset.direction === 'reverse' ? -1 : 1,
+        offset: 0,
+        initialRatio: index === 0 ? 0.62 : 0.28,
+      }));
+
+      function periodFor(track: HTMLElement) {
+        return track.scrollWidth / 2;
+      }
+
+      function normalizeOffset(value: number, period: number) {
+        return (((value % period) + period) % period) - period;
+      }
+
+      function positionTracks() {
+        for (const state of states) {
+          const period = periodFor(state.track);
+          if (period <= 0) continue;
+
+          if (state.offset === 0) state.offset = -period * state.initialRatio;
+          state.offset = normalizeOffset(state.offset, period);
+          state.track.style.transform = `translate3d(${state.offset}px, 0, 0)`;
+        }
+      }
+
+      function update() {
+        animationFrame = 0;
+        const currentScrollY = window.scrollY;
+        const delta = currentScrollY - previousScrollY;
+        previousScrollY = currentScrollY;
+
+        if (!isVisible || delta === 0) return;
+
+        for (const state of states) {
+          state.offset += delta * speed * state.direction;
+        }
+
+        positionTracks();
+      }
+
+      function onScroll() {
+        if (animationFrame) return;
+        animationFrame = window.requestAnimationFrame(update);
+      }
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          isVisible = entry?.isIntersecting ?? false;
+          previousScrollY = window.scrollY;
+        },
+        { rootMargin: '15% 0px' },
+      );
+
+      positionTracks();
+      observer.observe(marquee);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', positionTracks, { passive: true });
+    }
+  }
+
+  initializeScrollMarquees();
+</script>
+
+<style>
+  .scroll-marquee {
+    overflow: hidden;
+    contain: layout paint;
+  }
+
+  .marquee-row {
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+  }
+
+  .marquee-track span {
+    flex: none;
+    padding-right: clamp(2.5rem, 5vw, 6rem);
+    font-family: var(--brand-font-display);
+    font-size: clamp(4.25rem, 9vw, 10.5rem);
+    font-weight: 500;
+    letter-spacing: -0.045em;
+    line-height: 0.82;
+    white-space: nowrap;
+  }
+
+  .marquee-track em {
+    color: var(--brand-color-accent);
+    font-style: italic;
+  }
+
+  .marquee-track-outline span {
+    color: transparent;
+    -webkit-text-stroke: 1px color-mix(in srgb, var(--brand-color-text) 58%, transparent);
+  }
+
+  .marquee-track-outline em {
+    color: transparent;
+    -webkit-text-stroke-color: color-mix(in srgb, var(--brand-color-accent) 78%, transparent);
+  }
+
+  .marquee-track-solid span {
+    color: var(--brand-color-text);
+  }
+
+  @media (max-width: 47.999rem) {
+    .marquee-track span {
+      font-size: clamp(3.5rem, 16vw, 5rem);
+      line-height: 0.88;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      transform: translate3d(-12%, 0, 0) !important;
+      will-change: auto;
+    }
+
+    .marquee-track[data-direction='reverse'] {
+      transform: translate3d(-32%, 0, 0) !important;
+    }
+  }
+</style>

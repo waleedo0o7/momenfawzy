@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+
+interface Props {
+  projects: CollectionEntry<'projects'>[];
+}
+
+const { projects } = Astro.props;
+---
+
+<Section id="featured-projects" labelledby="featured-projects-title" class="border-b border-border">
+  <Container width="wide">
+    <div class="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-12">
+      <div>
+        <p class="eyebrow">Featured Projects</p>
+        <h2
+          id="featured-projects-title"
+          class="mt-5 font-display text-[clamp(3rem,4.6vw,5rem)] leading-[0.92] tracking-[-0.035em]"
+        >
+          A Selection of Our Work
+        </h2>
+      </div>
+      <a
+        href="/projects/"
+        class="editorial-link inline-flex w-fit shrink-0 items-center gap-3 text-xs font-bold tracking-[0.16em] uppercase lg:mb-1"
+      >
+        View all projects <span aria-hidden="true">→</span>
+      </a>
+    </div>
+
+    {projects.length > 0 ? (
+      <div class="mt-14 grid gap-5 md:grid-cols-2 lg:mt-16 lg:grid-cols-3 lg:gap-6">
+        {projects.slice(0, 3).map((project) => (
+          <article>
+            <a
+              href={`/projects/${project.data.slug}/`}
+              class="group relative block aspect-square overflow-hidden border border-white/10 bg-surface focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+            >
+              {project.data.coverImage && (
+                <Image
+                  src={project.data.coverImage}
+                  alt={project.data.imageAlt}
+                  widths={[480, 640, 960]}
+                  sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
+                  loading="lazy"
+                  quality={86}
+                  class="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-[var(--brand-ease-emphasized)] group-hover:scale-[1.035]"
+                />
+              )}
+              <div
+                class="pointer-events-none absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-black/90 via-black/45 to-transparent"
+                aria-hidden="true"
+              ></div>
+              <div class="absolute right-6 bottom-5 left-6 flex items-end justify-between gap-6">
+                <div>
+                  <p class="text-[0.6rem] font-bold tracking-[0.2em] text-accent uppercase">
+                    {project.data.category}
+                  </p>
+                  <h3 class="mt-1 font-display text-[clamp(1.35rem,2vw,1.8rem)] leading-none">
+                    {project.data.title}
+                  </h3>
+                </div>
+                <span
+                  class="shrink-0 text-xl text-accent transition-transform duration-300 group-hover:translate-x-1"
+                  aria-hidden="true"
+                >
+                  →
+                </span>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="mt-14 border border-border px-6 py-16 text-center lg:mt-16">
+        <p class="font-display text-[clamp(2rem,4vw,4rem)]">Explore the complete portfolio.</p>
+        <a href="/projects/" class="editorial-link mt-6 inline-flex items-center gap-3">
+          View all projects <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    )}
+  </Container>
+</Section>

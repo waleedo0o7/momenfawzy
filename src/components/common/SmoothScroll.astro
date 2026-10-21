@@ -1,0 +1,34 @@
+<script>
+  import Lenis from 'lenis';
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let lenis: Lenis | undefined;
+
+  function startSmoothScroll() {
+    if (reducedMotion.matches || lenis) return;
+
+    lenis = new Lenis({
+      anchors: true,
+      autoRaf: true,
+      lerp: 0.085,
+      smoothWheel: true,
+      stopInertiaOnNavigate: true,
+      syncTouch: false,
+      wheelMultiplier: 0.9,
+      respectReducedMotion: true,
+    });
+  }
+
+  function stopSmoothScroll() {
+    lenis?.destroy();
+    lenis = undefined;
+  }
+
+  function handleMotionPreference() {
+    if (reducedMotion.matches) stopSmoothScroll();
+    else startSmoothScroll();
+  }
+
+  startSmoothScroll();
+  reducedMotion.addEventListener('change', handleMotionPreference);
+</script>

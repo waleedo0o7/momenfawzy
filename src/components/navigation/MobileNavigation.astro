@@ -1,0 +1,64 @@
+---
+import { isActivePath, primaryNavigation } from '../../config/navigation';
+
+interface Props {
+  pathname: string;
+}
+
+const { pathname } = Astro.props;
+---
+
+<details class="mobile-navigation static lg:hidden">
+  <summary
+    class="flex min-h-11 min-w-11 cursor-pointer list-none items-center justify-center text-foreground transition-colors hover:text-accent"
+    aria-label="Toggle navigation"
+  >
+    <svg class="menu-icon" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+    </svg>
+    <svg class="close-icon hidden" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.5"></path>
+    </svg>
+  </summary>
+
+  <nav
+    class="absolute top-full right-[calc(-1*var(--brand-space-page-inline))] left-[calc(-1*var(--brand-space-page-inline))] border-t border-border bg-canvas px-[var(--brand-space-page-inline)] py-5 shadow-none"
+    aria-label="Mobile navigation"
+  >
+    <ul role="list">
+      {primaryNavigation.map((item) => {
+        const active = isActivePath(pathname, item.href);
+
+        return (
+          <li class="border-b border-border last:border-b-0">
+            <a
+              href={item.href}
+              aria-current={active ? 'page' : undefined}
+              class:list={[
+                'flex min-h-13 items-center justify-between py-3 text-sm font-semibold tracking-[0.1em] uppercase transition-colors hover:text-accent',
+                active ? 'text-accent' : 'text-foreground',
+              ]}
+            >
+              {item.label}
+              {active && <span class="text-[0.65rem] tracking-normal">Current</span>}
+            </a>
+          </li>
+        );
+      })}
+    </ul>
+  </nav>
+</details>
+
+<style>
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details[open] .menu-icon {
+    display: none;
+  }
+
+  details[open] .close-icon {
+    display: block;
+  }
+</style>

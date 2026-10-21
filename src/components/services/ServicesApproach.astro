@@ -1,0 +1,57 @@
+---
+import type { WorkflowStep } from '../../data/services';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+
+interface Props {
+  steps: readonly WorkflowStep[];
+}
+
+const { steps } = Astro.props;
+---
+
+<Section labelledby="services-approach-title" class="border-b border-border">
+  <Container width="wide">
+    <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
+      <div class="lg:col-span-7">
+        <p class="eyebrow">Our Approach</p>
+        <h2
+          id="services-approach-title"
+          class="mt-6 max-w-[12ch] font-display text-[clamp(3.5rem,6vw,7rem)] leading-[0.87] tracking-[-0.045em]"
+        >
+          One Clear Process. <span class="text-accent italic">No Guesswork.</span>
+        </h2>
+      </div>
+      <p class="max-w-[34rem] text-sm leading-7 text-muted sm:text-base lg:col-span-4 lg:col-start-9">
+        You always know what stage your project has reached, what comes next, and how each decision
+        supports the final result.
+      </p>
+    </div>
+
+    <ol
+      class="mt-16 grid border-t border-l border-border sm:grid-cols-2 lg:mt-24 xl:grid-cols-4"
+      role="list"
+    >
+      {steps.map((step, index) => (
+        <li
+          class:list={[
+            'group relative min-h-64 border-r border-b border-border p-7 sm:p-8',
+            index === steps.length - 1 && 'xl:col-span-2',
+          ]}
+        >
+          <span
+            class="absolute top-0 left-0 h-px w-0 bg-accent transition-[width] duration-500 ease-[var(--brand-ease-emphasized)] group-hover:w-full"
+            aria-hidden="true"
+          ></span>
+          <p class="text-[0.62rem] tracking-[0.2em] text-accent">
+            {String(index + 1).padStart(2, '0')}
+          </p>
+          <h3 class="mt-7 max-w-[15ch] font-display text-[clamp(2rem,2.5vw,3rem)] leading-[0.98] transition-colors duration-300 group-hover:text-accent">
+            {step.title}
+          </h3>
+          <p class="mt-6 max-w-[26rem] text-sm leading-7 text-muted">{step.description}</p>
+        </li>
+      ))}
+    </ol>
+  </Container>
+</Section>

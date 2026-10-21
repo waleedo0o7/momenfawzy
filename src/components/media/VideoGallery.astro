@@ -1,0 +1,355 @@
+---
+import { Image } from 'astro:assets';
+
+import type { MediaEntry } from '../../lib/content';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+
+interface Props {
+  items: MediaEntry[];
+}
+
+const { items } = Astro.props;
+const categories = [...new Set(items.map((item) => item.data.category))];
+---
+
+<Section tone="surface" labelledby="video-gallery-title" class="border-b border-border">
+  <Container width="wide">
+    <div class="flex flex-col gap-9 border-b border-border pb-9 lg:flex-row lg:items-end lg:justify-between lg:gap-16 lg:pb-12">
+      <div>
+        <p class="eyebrow">Watch &amp; Explore</p>
+        <h2
+          id="video-gallery-title"
+          class="mt-6 font-display text-[clamp(3.5rem,6vw,7rem)] leading-[0.86] tracking-[-0.045em]"
+        >
+          Studio <span class="text-accent italic">Films.</span>
+        </h2>
+      </div>
+
+      {items.length > 0 && (
+        <div
+          class="flex flex-wrap gap-x-6 gap-y-3"
+          role="group"
+          aria-label="Filter videos by category"
+          data-video-filters
+        >
+          <button type="button" class="video-filter" data-video-filter="all" aria-pressed="true">
+            All Films
+          </button>
+          {categories.map((category) => (
+            <button
+              type="button"
+              class="video-filter"
+              data-video-filter={category}
+              aria-pressed="false"
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+
+    {items.length > 0 ? (
+      <div
+        class="mt-12 grid grid-cols-2 gap-x-4 gap-y-10 md:grid-cols-3 md:gap-x-6 md:gap-y-14 xl:mt-16 xl:grid-cols-4"
+        data-video-grid
+      >
+        {items.map((item) => (
+          <article class="video-entry min-w-0" data-video-entry data-category={item.data.category}>
+            <button
+              type="button"
+              class="group block w-full text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+              data-video-trigger
+              data-video-id={item.data.youtubeId}
+              data-video-title={item.data.title}
+              data-video-category={item.data.category}
+              data-video-language={item.data.language}
+              aria-label={`Play video: ${item.data.title}`}
+            >
+              <span class="relative block aspect-[9/16] overflow-hidden bg-canvas">
+                <Image
+                  src={item.data.thumbnail}
+                  alt={item.data.thumbnailAlt}
+                  widths={[360, 540, 720, 960]}
+                  sizes="(max-width: 767px) 50vw, (max-width: 1279px) 33vw, 25vw"
+                  format="webp"
+                  quality={88}
+                  loading="lazy"
+                  class="h-full w-full object-cover transition-transform duration-700 ease-[var(--brand-ease-emphasized)] group-hover:scale-[1.025]"
+                />
+                <span class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/5 to-black/15"></span>
+                <span
+                  class="absolute top-4 right-4 grid size-11 place-items-center rounded-full border border-white/35 bg-black/35 text-sm text-white backdrop-blur-sm transition-colors group-hover:border-accent group-hover:text-accent sm:top-5 sm:right-5 sm:size-13"
+                  aria-hidden="true"
+                >
+                  ▶
+                </span>
+                <span class="absolute right-4 bottom-4 left-4 sm:right-5 sm:bottom-5 sm:left-5">
+                  <span class="block text-[0.58rem] font-bold tracking-[0.16em] text-accent uppercase sm:text-[0.65rem]">
+                    {item.data.category}
+                  </span>
+                  <span
+                    class="video-title mt-2 block text-sm leading-6 font-semibold text-white sm:text-base"
+                    lang={item.data.language}
+                    dir={item.data.language === 'ar' ? 'rtl' : 'ltr'}
+                  >
+                    {item.data.title}
+                  </span>
+                </span>
+              </span>
+            </button>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="py-[clamp(5rem,10vw,9rem)] text-center">
+        <p class="font-display text-[clamp(2.5rem,5vw,5rem)] leading-[0.95]">
+          Published films will appear here.
+        </p>
+      </div>
+    )}
+
+    <p class="sr-only" aria-live="polite" data-video-count></p>
+  </Container>
+</Section>
+
+<dialog
+  class="video-dialog m-0 h-full max-h-none w-full max-w-none bg-transparent p-0 text-foreground backdrop:bg-black/95"
+  data-video-dialog
+  aria-labelledby="active-video-title"
+>
+  <div class="relative flex min-h-dvh items-center justify-center px-5 py-16 sm:px-16 sm:py-12">
+    <button
+      type="button"
+      class="absolute top-4 right-4 z-20 grid size-11 place-items-center rounded-full border border-white/25 bg-black/40 text-2xl text-white transition-colors hover:border-accent hover:text-accent sm:top-7 sm:right-7"
+      data-video-close
+      aria-label="Close video"
+    >
+      ×
+    </button>
+
+    <button
+      type="button"
+      class="video-nav absolute top-1/2 left-2 z-20 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/35 text-2xl text-white transition-colors hover:border-accent hover:text-accent sm:left-7"
+      data-video-previous
+      aria-label="Previous video"
+    >
+      ‹
+    </button>
+    <button
+      type="button"
+      class="video-nav absolute top-1/2 right-2 z-20 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-white/20 bg-black/35 text-2xl text-white transition-colors hover:border-accent hover:text-accent sm:right-7"
+      data-video-next
+      aria-label="Next video"
+    >
+      ›
+    </button>
+
+    <div class="video-modal-shell w-full max-w-[28rem]">
+      <div
+        class="video-player mx-auto aspect-[9/16] max-h-[calc(100dvh-11rem)] bg-black"
+        data-video-player
+      ></div>
+      <div class="mt-4 flex items-start justify-between gap-6">
+        <div class="min-w-0">
+          <p
+            class="text-[0.62rem] font-bold tracking-[0.16em] text-accent uppercase"
+            data-active-video-category
+          ></p>
+          <h2
+            id="active-video-title"
+            class="mt-2 text-base leading-6 font-semibold text-white"
+            data-active-video-title
+          ></h2>
+        </div>
+        <p
+          class="shrink-0 pt-1 text-[0.65rem] font-bold tracking-[0.14em] text-white/55"
+          data-active-video-count
+        ></p>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-video-dialog]');
+  const player = dialog?.querySelector<HTMLElement>('[data-video-player]');
+  const activeTitle = dialog?.querySelector<HTMLElement>('[data-active-video-title]');
+  const activeCategory = dialog?.querySelector<HTMLElement>('[data-active-video-category]');
+  const activeCount = dialog?.querySelector<HTMLElement>('[data-active-video-count]');
+  const closeButton = dialog?.querySelector<HTMLButtonElement>('[data-video-close]');
+  const previousButton = dialog?.querySelector<HTMLButtonElement>('[data-video-previous]');
+  const nextButton = dialog?.querySelector<HTMLButtonElement>('[data-video-next]');
+  const triggers = [...document.querySelectorAll<HTMLButtonElement>('[data-video-trigger]')];
+  const entries = [...document.querySelectorAll<HTMLElement>('[data-video-entry]')];
+  const filterRoot = document.querySelector<HTMLElement>('[data-video-filters]');
+  const countStatus = document.querySelector<HTMLElement>('[data-video-count]');
+  let currentTrigger: HTMLButtonElement | undefined;
+  let previouslyFocused: HTMLElement | null = null;
+
+  function visibleTriggers() {
+    return triggers.filter(
+      (trigger) => !trigger.closest<HTMLElement>('[data-video-entry]')?.hidden,
+    );
+  }
+
+  function clearPlayer() {
+    player?.replaceChildren();
+  }
+
+  function renderVideo(trigger: HTMLButtonElement) {
+    if (!player || !activeTitle || !activeCategory || !activeCount) return;
+
+    const videoId = trigger.dataset.videoId;
+    if (!videoId) return;
+
+    currentTrigger = trigger;
+    const title = trigger.dataset.videoTitle ?? 'Studio film';
+    const category = trigger.dataset.videoCategory ?? 'Film';
+    const language = trigger.dataset.videoLanguage ?? 'en';
+    const activeTriggers = visibleTriggers();
+    const position = activeTriggers.indexOf(trigger);
+    const iframe = document.createElement('iframe');
+
+    iframe.src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1&playsinline=1&rel=0`;
+    iframe.title = title;
+    iframe.allow =
+      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    iframe.className = 'h-full w-full border-0';
+
+    clearPlayer();
+    player.append(iframe);
+    activeTitle.textContent = title;
+    activeTitle.lang = language;
+    activeTitle.dir = language === 'ar' ? 'rtl' : 'ltr';
+    activeCategory.textContent = category;
+    activeCount.textContent = `${position + 1} / ${activeTriggers.length}`;
+  }
+
+  function openVideo(trigger: HTMLButtonElement) {
+    if (!dialog) return;
+    previouslyFocused =
+      document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    renderVideo(trigger);
+    dialog.showModal();
+    document.documentElement.style.overflow = 'hidden';
+  }
+
+  function closeVideo() {
+    if (!dialog) return;
+    clearPlayer();
+    if (dialog.open) dialog.close();
+    document.documentElement.style.removeProperty('overflow');
+    previouslyFocused?.focus();
+  }
+
+  function moveVideo(direction: number) {
+    const activeTriggers = visibleTriggers();
+    if (!currentTrigger || activeTriggers.length < 2) return;
+    const currentIndex = activeTriggers.indexOf(currentTrigger);
+    const nextIndex = (currentIndex + direction + activeTriggers.length) % activeTriggers.length;
+    renderVideo(activeTriggers[nextIndex]);
+  }
+
+  function applyFilter(category: string) {
+    let visibleCount = 0;
+
+    for (const entry of entries) {
+      const visible = category === 'all' || entry.dataset.category === category;
+      entry.hidden = !visible;
+      if (visible) visibleCount += 1;
+    }
+
+    filterRoot?.querySelectorAll<HTMLButtonElement>('[data-video-filter]').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.videoFilter === category));
+    });
+
+    if (countStatus) {
+      countStatus.textContent = `${visibleCount} ${visibleCount === 1 ? 'video' : 'videos'} shown.`;
+    }
+  }
+
+  triggers.forEach((trigger) => trigger.addEventListener('click', () => openVideo(trigger)));
+  closeButton?.addEventListener('click', closeVideo);
+  previousButton?.addEventListener('click', () => moveVideo(-1));
+  nextButton?.addEventListener('click', () => moveVideo(1));
+  dialog?.addEventListener('close', clearPlayer);
+  dialog?.addEventListener('cancel', () => {
+    clearPlayer();
+    document.documentElement.style.removeProperty('overflow');
+  });
+  document.addEventListener('keydown', (event) => {
+    if (!dialog?.open) return;
+    if (event.key === 'ArrowLeft') moveVideo(-1);
+    if (event.key === 'ArrowRight') moveVideo(1);
+  });
+  filterRoot?.addEventListener('click', (event) => {
+    const target = (event.target as HTMLElement).closest<HTMLButtonElement>('[data-video-filter]');
+    if (target) applyFilter(target.dataset.videoFilter ?? 'all');
+  });
+</script>
+
+<style>
+  .video-filter {
+    position: relative;
+    padding-block: 0.4rem;
+    color: color-mix(in srgb, var(--brand-color-text) 58%, transparent);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color var(--brand-duration-base) var(--brand-ease-standard);
+  }
+
+  .video-filter::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    transform: scaleX(0);
+    transform-origin: right;
+    background: var(--brand-color-accent);
+    content: '';
+    transition: transform var(--brand-duration-base) var(--brand-ease-emphasized);
+  }
+
+  .video-filter:hover,
+  .video-filter[aria-pressed='true'] {
+    color: var(--brand-color-accent);
+  }
+
+  .video-filter[aria-pressed='true']::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .video-title {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  .video-dialog[open] {
+    display: block;
+  }
+
+  .video-dialog::backdrop {
+    background: rgb(5 5 4 / 96%);
+  }
+
+  .video-player {
+    width: min(100%, calc((100dvh - 11rem) * 9 / 16));
+  }
+
+  @media (max-width: 639px) {
+    .video-nav {
+      top: auto;
+      bottom: 1rem;
+      transform: none;
+    }
+  }
+</style>

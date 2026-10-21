@@ -1,0 +1,47 @@
+---
+import type { ProjectEntry } from '../../lib/content';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+
+interface Props {
+  nextProject?: ProjectEntry;
+}
+
+const { nextProject } = Astro.props;
+---
+
+<Section labelledby="project-navigation-title" class="border-b border-border">
+  <Container width="wide">
+    <div class="flex flex-col gap-12 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p id="project-navigation-title" class="eyebrow">
+          Continue Exploring
+        </p>
+        {nextProject ? (
+          <a
+            href={`/projects/${nextProject.data.slug}/`}
+            class="group mt-7 block max-w-[12ch] font-display text-[clamp(3.2rem,6vw,7rem)] leading-[0.86] tracking-[-0.045em] focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-accent"
+          >
+            Next: <span class="text-accent italic">{nextProject.data.title}</span>
+            <span
+              class="ml-2 inline-block text-accent transition-transform duration-300 group-hover:translate-x-2"
+              aria-hidden="true"
+            >
+              →
+            </span>
+          </a>
+        ) : (
+          <p class="mt-7 max-w-[18ch] font-display text-[clamp(3rem,5vw,6rem)] leading-[0.9]">
+            Explore the complete portfolio.
+          </p>
+        )}
+      </div>
+      <a
+        href="/projects/"
+        class="editorial-link inline-flex w-fit items-center gap-3 text-xs font-bold tracking-[0.16em] uppercase"
+      >
+        Return to Projects <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </Container>
+</Section>

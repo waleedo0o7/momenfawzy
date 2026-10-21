@@ -1,0 +1,131 @@
+---
+import { getImage, Image } from 'astro:assets';
+import 'photoswipe/style.css';
+
+import type { ProjectEntry } from '../../lib/content';
+import Container from '../ui/Container.astro';
+import Section from '../ui/Section.astro';
+
+interface Props {
+  project: ProjectEntry;
+}
+
+const { project } = Astro.props;
+const gallery = await Promise.all(
+  project.data.galleryImages.map(async (item) => {
+    const requestedWidth = Math.min(item.image.width, 2400);
+    const fullImage = await getImage({
+      src: item.image,
+      width: requestedWidth,
+      format: 'webp',
+      quality: 91,
+    });
+
+    return {
+      ...item,
+      fullSrc: fullImage.src,
+      fullWidth: Number(fullImage.attributes.width),
+      fullHeight: Number(fullImage.attributes.height),
+    };
+  }),
+);
+---
+
+{gallery.length > 0 && (
+  <Section tone="surface" labelledby="project-gallery-title" class="border-b border-border">
+    <Container width="wide">
+      <div class="flex items-end justify-between gap-6 border-b border-border pb-6">
+        <div>
+          <p class="eyebrow">Project Gallery</p>
+          <h2
+            id="project-gallery-title"
+            class="mt-4 font-display text-[clamp(2.7rem,4.5vw,5.5rem)] leading-[0.9] tracking-[-0.04em]"
+          >
+            Explore <span class="text-accent italic">the Space.</span>
+          </h2>
+        </div>
+        <p class="hidden text-[0.62rem] font-bold tracking-[0.16em] text-muted uppercase sm:block">
+          {gallery.length} {gallery.length === 1 ? 'View' : 'Views'} · Select to Enlarge
+        </p>
+      </div>
+
+      <div
+        id={`project-gallery-${project.data.slug}`}
+        class="mt-8 grid grid-cols-2 gap-3 md:gap-5 lg:mt-10 lg:grid-cols-3"
+        data-project-gallery
+      >
+        {gallery.map((item, index) => (
+          <a
+            href={item.fullSrc}
+            data-pswp-width={item.fullWidth}
+            data-pswp-height={item.fullHeight}
+            data-pswp-index={index}
+            target="_blank"
+            class="group relative block aspect-[4/3] overflow-hidden bg-canvas focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+            aria-label={`Open image ${index + 1} of ${gallery.length}: ${item.alt}`}
+          >
+            <Image
+              src={item.image}
+              alt={item.alt}
+              widths={[360, 540, 720, 960]}
+              sizes="(max-width: 1023px) 50vw, 33vw"
+              format="webp"
+              quality={87}
+              loading="lazy"
+              class="h-full w-full object-cover transition-transform duration-500 ease-[var(--brand-ease-emphasized)] group-hover:scale-[1.025]"
+            />
+            <span
+              class="absolute right-3 bottom-3 grid size-9 place-items-center border border-white/25 bg-black/55 text-base text-white opacity-90 backdrop-blur-sm transition-colors group-hover:border-accent group-hover:text-accent"
+              aria-hidden="true"
+            >
+              ↗
+            </span>
+          </a>
+        ))}
+      </div>
+    </Container>
+  </Section>
+)}
+
+<script>
+  import PhotoSwipeLightbox from 'photoswipe/lightbox';
+
+  const galleries = document.querySelectorAll<HTMLElement>('[data-project-gallery]');
+
+  for (const gallery of galleries) {
+    if (gallery.dataset.galleryReady === 'true') continue;
+
+    const lightbox = new PhotoSwipeLightbox({
+      gallery,
+      children: 'a',
+      pswpModule: () => import('photoswipe'),
+      bgOpacity: 0.96,
+      showHideAnimationType: 'fade',
+      wheelToZoom: true,
+      paddingFn: (viewportSize) => ({
+        top: viewportSize.x < 768 ? 52 : 64,
+        bottom: viewportSize.x < 768 ? 52 : 64,
+        left: viewportSize.x < 768 ? 12 : 56,
+        right: viewportSize.x < 768 ? 12 : 56,
+      }),
+    });
+
+    lightbox.init();
+    gallery.dataset.galleryReady = 'true';
+  }
+</script>
+
+<style is:global>
+  .pswp {
+    --pswp-bg: #090a08;
+    --pswp-icon-color: #f4efe6;
+    --pswp-icon-color-secondary: #090a08;
+  }
+
+  .pswp__counter {
+    font-family: var(--brand-font-sans);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+  }
+</style>

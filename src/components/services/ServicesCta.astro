@@ -1,0 +1,40 @@
+---
+import { primaryPhone } from '../../data/contact';
+import Button from '../ui/Button.astro';
+import Container from '../ui/Container.astro';
+---
+
+<section
+  aria-labelledby="services-cta-title"
+  class="relative isolate overflow-hidden border-b border-border bg-surface py-[clamp(8rem,13vw,13rem)]"
+>
+  <div
+    class="absolute inset-0 -z-20 bg-[radial-gradient(circle_at_50%_45%,rgba(201,159,112,0.13),transparent_34%),linear-gradient(180deg,rgba(16,17,15,0.16),rgba(16,17,15,0.74))]"
+    aria-hidden="true"
+  ></div>
+  <div class="absolute inset-y-0 left-[15%] -z-10 w-px bg-white/10" aria-hidden="true"></div>
+  <div class="absolute inset-y-0 right-[18%] -z-10 w-px bg-white/10" aria-hidden="true"></div>
+  <Container width="wide">
+    <div class="mx-auto max-w-[78rem] text-center">
+      <p class="eyebrow">Start Your Project</p>
+      <h2
+        id="services-cta-title"
+        class="mt-7 font-display text-[clamp(3.8rem,7.5vw,8.7rem)] leading-[0.83] tracking-[-0.052em]"
+      >
+        Ready to Create a Space That Feels <span class="text-accent italic">Completely Yours?</span>
+      </h2>
+      <p class="mx-auto mt-9 max-w-[42rem] text-[1.0625rem] leading-[1.8] text-white/70 sm:text-lg">
+        Tell us about your space, your priorities, and what you want to achieve. We will guide you
+        through the right design and execution journey from the very first conversation.
+      </p>
+      <div class="mt-11 flex flex-col items-center justify-center gap-4 sm:flex-row sm:gap-5">
+        <Button href="/contact/">
+          Discuss Your Project <span aria-hidden="true">→</span>
+        </Button>
+        <Button href={primaryPhone.href} variant="outline">
+          Call the Studio <span aria-hidden="true">→</span>
+        </Button>
+      </div>
+    </div>
+  </Container>
+</section>

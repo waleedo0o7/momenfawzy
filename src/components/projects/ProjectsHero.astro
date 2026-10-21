@@ -1,0 +1,71 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+import Container from '../ui/Container.astro';
+
+interface Props {
+  image: ImageMetadata;
+  imageAlt: string;
+}
+
+const { image, imageAlt } = Astro.props;
+---
+
+<section
+  aria-labelledby="projects-hero-title"
+  class="relative isolate min-h-[46rem] overflow-hidden border-b border-border sm:min-h-[55rem] lg:min-h-[52rem]"
+>
+  <div class="absolute inset-0 -z-30 lg:left-[23%]">
+    <Image
+      src={image}
+      alt={imageAlt}
+      widths={[720, 1080, 1440, 1920]}
+      sizes="(max-width: 1023px) 100vw, 77vw"
+      format="webp"
+      quality={88}
+      priority
+      class="h-full w-full object-cover object-center"
+    />
+  </div>
+  <div
+    class="absolute inset-0 -z-20 bg-[linear-gradient(90deg,rgba(10,11,9,0.98)_0%,rgba(10,11,9,0.92)_27%,rgba(10,11,9,0.48)_62%,rgba(10,11,9,0.22)_100%),linear-gradient(0deg,rgba(10,11,9,0.88)_0%,transparent_56%)]"
+    aria-hidden="true"
+  ></div>
+
+  <Container width="wide" class="flex min-h-[46rem] items-end sm:min-h-[55rem] lg:min-h-[52rem]">
+    <div class="projects-hero-copy w-full pb-[clamp(5rem,9vw,9rem)] pt-40">
+      <p class="eyebrow">Selected Works</p>
+      <h1
+        id="projects-hero-title"
+        class="mt-7 max-w-[9ch] font-display text-[clamp(4rem,8.5vw,9.6rem)] leading-[0.79] tracking-[-0.055em]"
+      >
+        Spaces Designed to <span class="text-accent italic">Inspire.</span>
+      </h1>
+      <div class="mt-10 max-w-[82rem]">
+        <p class="max-w-[43rem] text-[clamp(1.0625rem,1.25vw,1.25rem)] leading-[1.8] text-white/80">
+          An exploration of interiors where thoughtful design, materiality, and purposeful execution
+          come together.
+        </p>
+      </div>
+    </div>
+  </Container>
+</section>
+
+<style>
+  .projects-hero-copy {
+    animation: projects-hero-in 800ms var(--brand-ease-emphasized) both;
+  }
+
+  @keyframes projects-hero-in {
+    from {
+      transform: translateY(1.25rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .projects-hero-copy {
+      animation: none;
+    }
+  }
+</style>

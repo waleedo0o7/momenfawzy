@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import MediaHero from '../../components/media/MediaHero.astro';
+import VideoGallery from '../../components/media/VideoGallery.astro';
+import { getMediaItems } from '../../lib/content';
+
+const title = 'Media Center | Design Videos & Project Tours';
+const description =
+  'Watch project tours, design insights, site execution details, and before-and-after films from Momen Fawzy Interior Design Studio.';
+const items = await getMediaItems();
+---
+
+<BaseLayout {title} {description} noindex={items.length === 0}>
+  <main id="main-content">
+    <MediaHero count={items.length} />
+    <VideoGallery {items} />
+  </main>
+</BaseLayout>
