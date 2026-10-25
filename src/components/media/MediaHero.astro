@@ -1,4 +1,7 @@
 ---
+import { Image } from 'astro:assets';
+
+import heroImage from '../../assets/images/media-center/cinematic-warm-interior-portrait.png';
 import Container from '../ui/Container.astro';
 
 interface Props {
@@ -10,29 +13,72 @@ const { count } = Astro.props;
 
 <section
   aria-labelledby="media-hero-title"
-  class="border-b border-border bg-canvas py-[clamp(5rem,9vw,9rem)] text-foreground"
+  class="relative isolate min-h-[36rem] overflow-hidden border-b border-border text-foreground sm:min-h-[40rem] lg:min-h-[44rem] xl:min-h-[46rem]"
 >
-  <Container width="wide">
-    <div class="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:items-end lg:gap-24">
-      <div>
-        <p class="eyebrow">Media Center</p>
-        <h1
-          id="media-hero-title"
-          class="mt-7 max-w-[13ch] font-display text-[clamp(4rem,8vw,8.5rem)] leading-[0.82] tracking-[-0.05em]"
-        >
-          Design in <span class="text-accent italic">Motion.</span>
-        </h1>
-      </div>
+  <div class="absolute inset-0 -z-20">
+    <Image
+      src={heroImage}
+      alt=""
+      widths={[640, 960, 1280, 1672]}
+      sizes="100vw"
+      format="webp"
+      quality={88}
+      priority
+      class="h-full w-full object-cover object-[62%_center] sm:object-[44%_center] lg:object-[center_15%]"
+    />
+  </div>
 
-      <div class="max-w-xl lg:pb-3">
-        <p class="text-[clamp(1rem,1.4vw,1.25rem)] leading-8 text-muted">
-          Short-form perspectives on projects, site execution, and the decisions behind a finished
-          interior.
-        </p>
-        <p class="mt-8 border-t border-border pt-5 text-[0.67rem] font-bold tracking-[0.18em] text-accent uppercase">
-          {String(count).padStart(2, '0')} Published Films
-        </p>
-      </div>
+  <div
+    class="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(8,9,8,0.94)_0%,rgba(8,9,8,0.76)_32%,rgba(8,9,8,0.2)_52%,rgba(8,9,8,0.08)_70%,rgba(8,9,8,0.04)_100%)]"
+    aria-hidden="true"
+  ></div>
+
+  <Container
+    width="wide"
+    class="flex min-h-[36rem] items-end sm:min-h-[40rem] lg:min-h-[44rem] lg:items-center xl:min-h-[46rem]"
+  >
+    <div class="media-hero-copy w-full max-w-[36rem] pt-64 pb-10 sm:pt-72 sm:pb-14 lg:py-24">
+      <p class="eyebrow">Media Center</p>
+      <h1
+        id="media-hero-title"
+        class="mt-5 font-display text-[clamp(3.6rem,7vw,6.875rem)] leading-[0.82] tracking-[-0.05em] sm:mt-6"
+      >
+        <span class="block">Design in</span>
+        <span class="block text-accent italic">Motion.</span>
+      </h1>
+
+      <p class="mt-7 max-w-[31rem] text-[clamp(0.95rem,1.25vw,1.125rem)] leading-7 text-white/80 sm:mt-8 sm:leading-8">
+        Short-form perspectives on projects, site execution, and the decisions behind a finished
+        interior.
+      </p>
+
+      <p class="mt-6 flex w-fit items-baseline gap-3 border-t border-white/25 pt-4 sm:mt-7 sm:pt-5">
+        <span class="font-display text-[2rem] leading-none text-accent">
+          {String(count).padStart(2, '0')}
+        </span>
+        <span class="text-[0.67rem] font-bold tracking-[0.18em] text-white/75 uppercase">
+          Published Films
+        </span>
+      </p>
     </div>
   </Container>
 </section>
+
+<style>
+  .media-hero-copy {
+    animation: media-hero-in 800ms var(--brand-ease-emphasized) both;
+  }
+
+  @keyframes media-hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(1.25rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .media-hero-copy {
+      animation: none;
+    }
+  }
+</style>

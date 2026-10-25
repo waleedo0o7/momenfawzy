@@ -1,6 +1,6 @@
 ---
+import whatsappLogo from '../../assets/images/ui/whatsapp-logo.svg';
 import { contactConfig } from '../../data/contact';
-import ContactIcon from '../contact/ContactIcon.astro';
 
 const whatsappUrl = contactConfig.whatsappUrl ? new URL(contactConfig.whatsappUrl) : null;
 
@@ -15,11 +15,18 @@ whatsappUrl?.searchParams.set(
     href={whatsappUrl.toString()}
     target="_blank"
     rel="noopener noreferrer"
-    class="whatsapp-float fixed right-4 z-50 grid size-12 place-items-center rounded-full border border-accent/60 bg-canvas text-accent shadow-[0_0.75rem_2.5rem_rgba(0,0,0,0.35)] transition-[color,background-color,border-color,transform] duration-300 hover:-translate-y-1 hover:border-accent hover:bg-accent hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:right-6 sm:size-13"
+    class="whatsapp-float fixed right-4 z-50 grid size-11 place-items-center rounded-full bg-transparent drop-shadow-[0_0.5rem_0.75rem_rgba(0,0,0,0.3)] transition-transform duration-300 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#25d366] sm:right-6"
     aria-label="Contact Momen Fawzy Interior Design on WhatsApp"
     title="Contact us on WhatsApp"
   >
-    <ContactIcon name="whatsapp" class="size-5 sm:size-6" />
+    <img
+      src={whatsappLogo.src}
+      alt=""
+      width={40}
+      height={40}
+      class="size-full object-contain"
+      aria-hidden="true"
+    />
   </a>
 )}
 

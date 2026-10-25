@@ -5,6 +5,7 @@
   --brand-color-light: #eee9df;
   --brand-color-text: #f3efe7;
   --brand-color-text-muted: #aaa59d;
+  --brand-color-text-soft: #b8b2aa;
   --brand-color-ink: #242321;
   --brand-color-ink-muted: #625d56;
   --brand-color-accent: #c99f70;
@@ -56,6 +57,7 @@
   --color-light: var(--brand-color-light);
   --color-foreground: var(--brand-color-text);
   --color-muted: var(--brand-color-text-muted);
+  --color-soft: var(--brand-color-text-soft);
   --color-ink: var(--brand-color-ink);
   --color-ink-muted: var(--brand-color-ink-muted);
   --color-accent: var(--brand-color-accent);
