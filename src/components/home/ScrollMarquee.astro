@@ -64,8 +64,11 @@
       }
 
       function positionTracks() {
-        for (const state of states) {
-          const period = periodFor(state.track);
+        // Read every layout value before writing transforms to avoid layout thrashing.
+        const periods = states.map((state) => periodFor(state.track));
+
+        for (const [index, state] of states.entries()) {
+          const period = periods[index] ?? 0;
           if (period <= 0) continue;
 
           if (state.offset === 0) state.offset = -period * state.initialRatio;

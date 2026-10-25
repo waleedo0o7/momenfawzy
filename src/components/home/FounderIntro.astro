@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
 
 import founderPortrait from '../../assets/images/momen-founder-02.png';
 import Container from '../ui/Container.astro';
@@ -18,14 +18,17 @@ import Section from '../ui/Section.astro';
   <Container width="wide">
     <div class="grid gap-12 lg:grid-cols-[0.78fr_1.3fr] lg:items-stretch lg:gap-18 xl:gap-24">
       <div class="founder-image relative min-h-[34rem] overflow-hidden bg-[#1d1c18] sm:min-h-[43rem] lg:min-h-[48rem]">
-        <Image
+        <Picture
           src={founderPortrait}
           alt="Portrait of Momen Fawzy"
-          widths={[480, 640, 800, 960]}
+          formats={['avif']}
+          fallbackFormat="webp"
+          widths={[360, 480, 640, 800, 960]}
           sizes="(max-width: 1023px) 100vw, 38vw"
-          format="webp"
-          quality={86}
+          quality={62}
           loading="lazy"
+          decoding="async"
+          pictureAttributes={{ class: 'absolute inset-0 h-full w-full' }}
           class="absolute inset-0 h-full w-full object-cover object-[center_42%]"
         />
         <p class="absolute right-5 bottom-5 left-5 border-t border-white/20 pt-4 text-[0.62rem] tracking-[0.18em] text-white/60 uppercase">

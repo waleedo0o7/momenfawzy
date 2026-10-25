@@ -58,6 +58,9 @@ founder portrait is processed by Astro from the local source asset.
 
 Run `npm run validate`, then upload the contents of `dist/` to the hosting document root (commonly
 `public_html/`). The production output is fully static and does not require Node.js on the server.
+The generated `.htaccess` assigns one-year immutable caching to Astro's fingerprinted `/_astro/`
+assets, revalidates HTML on every visit, and enables text compression when the corresponding Apache
+modules are available. Upload hidden files so this configuration reaches the document root.
 
 ## Typography
 

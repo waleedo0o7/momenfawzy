@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import { Picture } from 'astro:assets';
 
 import heroBackground from '../../assets/images/hero-background.png';
 import heroPortrait from '../../assets/images/momen-hero-cutout.png';
@@ -10,8 +10,23 @@ import Container from '../ui/Container.astro';
 <section
   class="hero relative isolate overflow-hidden border-b border-border"
   aria-labelledby="hero-title"
-  style={`background-image: url("${heroBackground.src}"); background-size: cover; background-position: center;`}
 >
+  <Picture
+    src={heroBackground}
+    alt=""
+    aria-hidden="true"
+    formats={['avif']}
+    fallbackFormat="webp"
+    widths={[480, 768, 1024, 1440, 1920, 2158]}
+    sizes="100vw"
+    quality={72}
+    loading="eager"
+    decoding="sync"
+    fetchpriority="high"
+    pictureAttributes={{ class: 'absolute inset-0 z-0 h-full w-full' }}
+    class="h-full w-full object-cover object-center"
+  />
+
   <div
     class="pointer-events-none absolute inset-0 z-0"
     style="background-color: color-mix(in oklab, var(--color-black) 50%, transparent);"
@@ -44,14 +59,18 @@ import Container from '../ui/Container.astro';
       </div>
 
       <div class="hero-portrait relative z-10 mx-auto mt-4 h-[31rem] w-[min(122%,36rem)] -translate-x-[2%] sm:h-[40rem] md:h-[50rem] md:w-[44rem] xl:absolute xl:right-[-3%] xl:bottom-0 xl:mt-0 xl:h-[92%] xl:w-[64%] xl:translate-x-0 2xl:right-[-1%] 2xl:w-[60%]">
-        <Image
+        <Picture
           src={heroPortrait}
           alt="Momen Fawzy seated in a wooden armchair, facing the camera"
-          widths={[480, 640, 800, 1024, 1314]}
+          formats={['avif']}
+          fallbackFormat="webp"
+          widths={[360, 480, 640, 800, 1024, 1314]}
           sizes="(max-width: 639px) 122vw, (max-width: 767px) 36rem, (max-width: 1279px) 44rem, (max-width: 1535px) 64vw, 60vw"
-          format="webp"
-          quality={86}
-          priority
+          quality={62}
+          loading="eager"
+          decoding="async"
+          fetchpriority="low"
+          pictureAttributes={{ class: 'block h-full w-full' }}
           class="h-full w-full object-contain object-center-bottom xl:object-right-bottom"
         />
       </div>
